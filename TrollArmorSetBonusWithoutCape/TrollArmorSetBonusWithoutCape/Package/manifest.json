@@ -1,0 +1,9 @@
+{
+  "name": "Troll_Armor_Set_Bonus_Without_Cape_Water_Resistant_Cape",
+  "description": "Turns the troll armor set bonus into a 3 piece set and optionally gives the troll hide cape water resistance.",
+  "version_number": "1.0",
+  "website_url": "https://github.com/Goldenrevolver/ValheimMiniMods",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.1901"
+  ]
+}
