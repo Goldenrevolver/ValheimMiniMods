@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmarterCorpseRun", "SmarterCorpseRun\SmarterCorpseRun.csproj", "{E7049E29-0EA5-4028-AF35-A9F5F095AAAF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E7049E29-0EA5-4028-AF35-A9F5F095AAAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7049E29-0EA5-4028-AF35-A9F5F095AAAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7049E29-0EA5-4028-AF35-A9F5F095AAAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7049E29-0EA5-4028-AF35-A9F5F095AAAF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B7DDC132-0780-48A0-BE80-344D2700784D}
+	EndGlobalSection
+EndGlobal
