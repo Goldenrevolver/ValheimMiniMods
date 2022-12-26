@@ -35,7 +35,7 @@ namespace InstantlyDestroyBoatsAndCarts
 
                 __result = false;
 
-                var config = AllowDetroyFor.Value;
+                var config = AllowDestroyFor.Value;
 
                 if (ship != null && (config == AllowDestroy.OnlyBoats || config == AllowDestroy.Both))
                 {
