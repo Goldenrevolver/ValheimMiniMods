@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleSetAndCapeBonuses", "SimpleSetAndCapeBonuses\SimpleSetAndCapeBonuses.csproj", "{AFA63DA7-D6F9-4EE4-9E3B-842443C3E49D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AFA63DA7-D6F9-4EE4-9E3B-842443C3E49D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFA63DA7-D6F9-4EE4-9E3B-842443C3E49D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFA63DA7-D6F9-4EE4-9E3B-842443C3E49D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFA63DA7-D6F9-4EE4-9E3B-842443C3E49D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {611D4DCB-6074-4148-9BA1-86626E281A46}
+	EndGlobalSection
+EndGlobal
