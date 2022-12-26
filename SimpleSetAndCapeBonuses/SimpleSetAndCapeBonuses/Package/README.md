@@ -1,4 +1,4 @@
-This mod adds two new unique set bonuses to rags armor and the leather armor. It also adds bonuses to the lesser used capes.
+This mod adds two new unique set bonuses to the rags armor and the leather armor. It also adds bonuses to the lesser used capes.
 
 This is a companion mod to my other new mod 'Cape and Torch Resistance Changes - Water and Cold Resistance'.
 It also includes the set bonus changes from 'Troll Armor Set Bonus Without Cape, Water Resistant Cape', but not the water resistance changes.

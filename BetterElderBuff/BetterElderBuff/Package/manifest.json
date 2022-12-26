@@ -1,7 +1,7 @@
 {
   "name": "Better_Elder_Buff",
   "description": "Changes the power of the Elder to additionally grant Pickaxe damage and Carrying Capacity",
-  "version_number": "1.0",
+  "version_number": "1.0.0",
   "website_url": "https://github.com/Goldenrevolver/ValheimMiniMods",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.1901"
