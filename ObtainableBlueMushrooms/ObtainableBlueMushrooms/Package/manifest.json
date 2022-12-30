@@ -1,0 +1,9 @@
+{
+  "name": "Immersively_Obtainable_Blue_Mushroom",
+  "description": "Adds a way to obtain and grow blue mushrooms in frost caves and changes food recipes to use it.",
+  "version_number": "1.0.0",
+  "website_url": "https://github.com/Goldenrevolver/ValheimMiniMods",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.1901"
+  ]
+}
