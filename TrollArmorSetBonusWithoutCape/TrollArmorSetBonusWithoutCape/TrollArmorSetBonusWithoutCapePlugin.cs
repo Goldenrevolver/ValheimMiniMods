@@ -13,8 +13,8 @@ namespace TrollArmorSetBonusWithoutCape
     [BepInPlugin("goldenrevolver.TrollArmorSetBonusWithoutCape", NAME, VERSION)]
     public class TrollArmorSetBonusWithoutCapePlugin : BaseUnityPlugin
     {
-        public const string NAME = "Troll Armor Set Bonus Without Cape, Water Resistant Cape";
-        public const string VERSION = "1.0";
+        public const string NAME = "Troll Armor Set Bonus Without Cape, Cape Adds Wet Resistance";
+        public const string VERSION = "1.0.1";
 
         public static ConfigEntry<float> TrollCapeMovementSpeed;
         public static ConfigEntry<WaterResistance> GiveTrollCapeWaterResistanceIfPossible;

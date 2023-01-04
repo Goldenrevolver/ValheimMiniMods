@@ -17,7 +17,7 @@ namespace TrollCapeSetBonusChange
         };
 
         [HarmonyPatch(nameof(ObjectDB.Awake))]
-        [HarmonyPrefix]
+        [HarmonyPostfix]
         public static void Awake_Postfix(ObjectDB __instance)
         {
             if (SceneManager.GetActiveScene().name != "main")
