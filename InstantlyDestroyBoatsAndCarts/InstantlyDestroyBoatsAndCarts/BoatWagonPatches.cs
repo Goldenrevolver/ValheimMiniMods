@@ -58,7 +58,7 @@ namespace InstantlyDestroyBoatsAndCarts
                         return false;
                     }
 
-                    __result = cart.InUse();
+                    __result = !cart.InUse();
                     return false;
                 }
 

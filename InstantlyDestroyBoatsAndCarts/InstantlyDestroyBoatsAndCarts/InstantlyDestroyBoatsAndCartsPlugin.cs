@@ -9,7 +9,7 @@ namespace InstantlyDestroyBoatsAndCarts
     public class InstantlyDestroyBoatsAndCartsPlugin : BaseUnityPlugin
     {
         public const string NAME = "Instantly Destroy Boats and Carts";
-        public const string VERSION = "1.0";
+        public const string VERSION = "1.0.1";
 
         public static ConfigEntry<AllowDestroy> AllowDestroyFor;
         public static ConfigEntry<bool> PreventWhenContainerIsNotEmpty;
