@@ -17,11 +17,11 @@ namespace BetterElderBuff
                 StringBuilder stringBuilder = new StringBuilder(256);
 
                 stringBuilder.AppendFormat(BetterElderBuffPlugin.Tooltip.Value + '\n');
-                stringBuilder.AppendFormat($"{__instance.Translate("inventory_chop")}: <color=orange>{BetterElderBuffPlugin.DamageModifier.Value * 100f:+0;-0}</color>\n");
+                stringBuilder.AppendFormat($"{__instance.Translate("inventory_chop")}: <color=orange>{(BetterElderBuffPlugin.DamageModifier.Value - 1) * 100f:+0;-0}%</color>\n");
 
                 if (BetterElderBuffPlugin.GivePickaxeDamage.Value)
                 {
-                    stringBuilder.AppendFormat($"{__instance.Translate("inventory_pickaxe")}: <color=orange>{BetterElderBuffPlugin.DamageModifier.Value * 100f:+0;-0}</color>\n");
+                    stringBuilder.AppendFormat($"{__instance.Translate("inventory_pickaxe")}: <color=orange>{(BetterElderBuffPlugin.DamageModifier.Value - 1) * 100f:+0;-0}%</color>\n");
                 }
 
                 if (BetterElderBuffPlugin.MaxCarryWeight.Value > 0)
