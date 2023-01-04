@@ -4,6 +4,7 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 *.zip
+**/[Pp]ackage/[Pp]lugins/*.dll
 
 # User-specific files
 *.rsuser
