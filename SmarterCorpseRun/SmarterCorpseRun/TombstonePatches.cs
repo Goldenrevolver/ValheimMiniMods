@@ -170,6 +170,11 @@ namespace SmarterCorpseRun
 
             foreach (ItemData playerItem in playerItems)
             {
+                if (playerItem.m_customData != null && playerItem.m_customData.Count > 0)
+                {
+                    continue;
+                }
+
                 if (playerItem.m_shared.m_maxStackSize <= 1)
                 {
                     continue;
@@ -177,6 +182,11 @@ namespace SmarterCorpseRun
 
                 foreach (ItemData tombStoneItem in fromInventory.m_inventory)
                 {
+                    if (tombStoneItem.m_customData != null && tombStoneItem.m_customData.Count > 0)
+                    {
+                        continue;
+                    }
+
                     if (tombStoneItem.m_shared.m_name == playerItem.m_shared.m_name && tombStoneItem.m_quality == playerItem.m_quality)
                     {
                         int itemsToMove = Math.Min(tombStoneItem.m_shared.m_maxStackSize - tombStoneItem.m_stack, playerItem.m_stack);

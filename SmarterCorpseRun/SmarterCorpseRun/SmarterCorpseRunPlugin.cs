@@ -13,7 +13,7 @@ namespace SmarterCorpseRun
     public class SmarterCorpseRunPlugin : BaseUnityPlugin
     {
         public const string NAME = "Smarter Corpse Run and Tombstone";
-        public const string VERSION = "1.0";
+        public const string VERSION = "1.0.1";
 
         public const string CustomCorpseRun = "GoldensCorpseRunWithCustomCarryWeight";
 
