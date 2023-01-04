@@ -71,7 +71,7 @@ namespace CapeAndTorchResistanceChanges
         }
 
         [HarmonyPatch(nameof(ObjectDB.Awake))]
-        [HarmonyPrefix]
+        [HarmonyPostfix]
         public static void Awake_Postfix(ObjectDB __instance)
         {
             if (SceneManager.GetActiveScene().name != "main")
@@ -190,9 +190,11 @@ namespace CapeAndTorchResistanceChanges
 
                     if (resChanges)
                     {
+                        var mod = LoxCapeColdResistance.Value == ColdResistance.Immune ? HitData.DamageModifier.Immune : HitData.DamageModifier.VeryResistant;
+
                         shared.m_damageModifiers = new System.Collections.Generic.List<HitData.DamageModPair>
                         {
-                            new HitData.DamageModPair() { m_type = (HitData.DamageType)NewDamageTypes.Cold, m_modifier = HitData.DamageModifier.Immune }
+                            new HitData.DamageModPair() { m_type = (HitData.DamageType)NewDamageTypes.Cold, m_modifier = mod }
                         };
                     }
                 }
