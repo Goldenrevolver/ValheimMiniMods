@@ -60,7 +60,7 @@ namespace SimpleSetAndCapeBonuses
                 "Pickable_Mushroom",
                 // intentional lower casing
                 "Pickable_Mushroom_yellow",
-                // intentional inclusion of unobtainable item for future mod
+                // intentional inclusion of unobtainable item for my other mod 'Immersively Obtainable Blue Mushrooms'
                 "Pickable_Mushroom_blue",
 
                 "Pickable_Dandelion",
