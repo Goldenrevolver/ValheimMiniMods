@@ -1,7 +1,7 @@
 {
   "name": "Resizable_Boss_Trophies",
   "description": "Allows you to resize all boss trophies (to make them all the same size), as well as a few of the other big ones",
-  "version_number": "1.0.0",
+  "version_number": "1.0.1",
   "website_url": "https://github.com/Goldenrevolver/ValheimMiniMods",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.1901"

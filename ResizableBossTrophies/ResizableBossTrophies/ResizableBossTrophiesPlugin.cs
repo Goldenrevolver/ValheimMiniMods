@@ -10,7 +10,7 @@ namespace ResizableBossTrophies
     {
         public const string NAME = "Resizable Boss Trophies and more";
 
-        public const string VERSION = "1.0";
+        public const string VERSION = "1.0.1";
 
         public static ConfigEntry<float> EikthyTrophySize;
         public static ConfigEntry<float> ElderTrophySize;
