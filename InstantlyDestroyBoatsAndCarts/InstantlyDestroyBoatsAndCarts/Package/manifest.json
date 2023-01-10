@@ -1,7 +1,7 @@
 {
   "name": "Instantly_Destroy_Boats_And_Carts",
   "description": "Allows you to instantly destroy a boat/ ship or cart with the destroy function of the hammer",
-  "version_number": "1.0.1",
+  "version_number": "1.0.2",
   "website_url": "https://github.com/Goldenrevolver/ValheimMiniMods",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.1901"

@@ -11,7 +11,4 @@ You can destroy a cart when:
 - optionally only when the chest is empty
 
 
-Changelog: Fixed carts only being destroyable while in use, instead of while not being in use, whoops!
-
-
 Source code available on github: https://github.com/Goldenrevolver/ValheimMiniMods

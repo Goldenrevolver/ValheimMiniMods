@@ -71,7 +71,7 @@ namespace InstantlyDestroyBoatsAndCarts
         {
             if (!container)
             {
-                return false;
+                return true;
             }
 
             var isPrivate = container.m_privacy == Container.PrivacySetting.Private;
