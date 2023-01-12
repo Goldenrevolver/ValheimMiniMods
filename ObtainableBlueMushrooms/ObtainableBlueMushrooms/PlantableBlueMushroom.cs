@@ -10,18 +10,33 @@ namespace ObtainableBlueMushrooms
     {
         internal static int pieceNonSolidLayerMask;
 
-        public static void InitPieceAndCultivator()
+        public static void InitPieceAndAddToBuildPieces()
         {
+            ItemDrop hammer = hammerPrefab.GetComponent<ItemDrop>();
             ItemDrop cultivator = cultivatorPrefab.GetComponent<ItemDrop>();
 
             var piece = InitBlueMushroomPiece();
 
-            if (!cultivator.m_itemData.m_shared.m_buildPieces.m_pieces.Contains(piece.gameObject))
+            if (ObtainableBlueMushroomsPlugin.MushroomPlantingTool.Value == ObtainableBlueMushroomsPlugin.PlantingTool.Hammer)
             {
-                cultivator.m_itemData.m_shared.m_buildPieces.m_pieces.Add(piece.gameObject);
-            }
+                if (!hammer.m_itemData.m_shared.m_buildPieces.m_pieces.Contains(piece.gameObject))
+                {
+                    hammer.m_itemData.m_shared.m_buildPieces.m_pieces.Add(piece.gameObject);
+                }
 
-            cultivator.m_itemData.m_shared.m_buildPieces.m_canRemovePieces = true;
+                cultivator.m_itemData.m_shared.m_buildPieces.m_pieces.Remove(piece.gameObject);
+            }
+            else
+            {
+                if (!cultivator.m_itemData.m_shared.m_buildPieces.m_pieces.Contains(piece.gameObject))
+                {
+                    cultivator.m_itemData.m_shared.m_buildPieces.m_pieces.Add(piece.gameObject);
+                }
+
+                cultivator.m_itemData.m_shared.m_buildPieces.m_canRemovePieces = true;
+
+                hammer.m_itemData.m_shared.m_buildPieces.m_pieces.Remove(piece.gameObject);
+            }
 
             var onion = cultivator.m_itemData.m_shared.m_buildPieces.m_pieces.First((p) => p.name == "sapling_onion");
 
@@ -47,6 +62,8 @@ namespace ObtainableBlueMushrooms
             var piece = pickableBlueMushroomPrefab.GetComponent<Piece>() ?? pickableBlueMushroomPrefab.AddComponent<Piece>();
 
             piece.m_resources = new Piece.Requirement[] { new Piece.Requirement { m_resItem = blueMushroomItemDrop, m_amount = 2, m_recover = false } };
+
+            piece.m_craftingStation = null;
 
             piece.m_name = blueMushroomItemDrop.m_itemData.m_shared.m_name;
             piece.m_description = string.Empty;

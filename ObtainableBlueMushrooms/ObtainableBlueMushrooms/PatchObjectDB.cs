@@ -14,6 +14,9 @@ namespace ObtainableBlueMushrooms
         private const string cultivatorPrefabName = "Cultivator";
         internal static GameObject cultivatorPrefab;
 
+        private const string hammerPrefabName = "Hammer";
+        internal static GameObject hammerPrefab;
+
         private const string blueMushroomItemDropName = "MushroomBlue";
         internal static ItemDrop blueMushroomItemDrop;
 
@@ -35,13 +38,18 @@ namespace ObtainableBlueMushrooms
                 {
                     cultivatorPrefab = (GameObject)gameObject;
                 }
+
+                if (gameObject.name == hammerPrefabName)
+                {
+                    hammerPrefab = (GameObject)gameObject;
+                }
             }
 
             blueMushroomItemDrop = __instance.GetItemPrefab(blueMushroomItemDropName).GetComponent<ItemDrop>();
 
             if (EnablePlantingInCaves.Value && !HasPlugin("advize.PlantEverything"))
             {
-                PlantableBlueMushroom.InitPieceAndCultivator();
+                PlantableBlueMushroom.InitPieceAndAddToBuildPieces();
             }
 
             FoodAndRecipeChanges.AddFoodAndRecipeChanges(__instance);
