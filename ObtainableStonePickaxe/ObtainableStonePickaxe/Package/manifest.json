@@ -1,0 +1,9 @@
+{
+  "name": "Obtainable_Stone_Pickaxe_and_Upgradeable_Antler_Pickaxe",
+  "description": "Adds the cut stone pickaxe item and makes it and the antler pickaxe upgradeable",
+  "version_number": "1.0.0",
+  "website_url": "https://github.com/Goldenrevolver/ValheimMiniMods",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.1901"
+  ]
+}
