@@ -6,6 +6,9 @@ This fixes two issues:
 
 This is not a new item, this just renames turnip stew. You can change the new name in the config.
 
+This is a companion mod to my other mod [Immersively Obtainable Blue Mushrooms](https://valheim.thunderstore.io/package/Goldenrevolver/Immersively_Obtainable_Blue_Mushrooms/).
+
+
 Backstory:
 
 With the release of the hearth and home update, I started a singleplayer vegetarian melee only no blocking playthrough, so I could force myself to learn dodging and not rely on health food and shields. When I arrived in the swamp, I was annoyed to see that I couldn't upgrade my carrot soup, since every food item now wasn't vegetarian.

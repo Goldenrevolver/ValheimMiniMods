@@ -9,7 +9,7 @@ namespace VegetarianTurnipSoup
     public class VegetarianTurnipSoupPlugin : BaseUnityPlugin
     {
         public const string NAME = "Vegetarian Turnip Soup";
-        public const string VERSION = "1.0";
+        public const string VERSION = "1.0.1";
 
         public static ConfigEntry<string> TurnipSoupName;
 

@@ -1,7 +1,7 @@
 ﻿using BepInEx;
+using BepInEx.Bootstrap;
 using BepInEx.Configuration;
 using HarmonyLib;
-using System.Linq;
 using System.Reflection;
 
 namespace ObtainableBlueMushrooms
@@ -70,8 +70,7 @@ namespace ObtainableBlueMushrooms
 
         public static bool HasPlugin(string guid)
         {
-            var plugins = FindObjectsOfType<BaseUnityPlugin>();
-            return plugins.Any(plugin => plugin.Info.Metadata.GUID == guid);
+            return Chainloader.PluginInfos.ContainsKey(guid);
         }
 
         public enum LootChange

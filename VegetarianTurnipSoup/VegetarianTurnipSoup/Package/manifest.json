@@ -1,7 +1,7 @@
 {
   "name": "Vegetarian_Turnip_Soup",
   "description": "Turns turnip stew into turnip soup, replacing the boar meat component with a yellow mushroom",
-  "version_number": "1.0.0",
+  "version_number": "1.0.1",
   "website_url": "https://github.com/Goldenrevolver/ValheimMiniMods",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.1901"
