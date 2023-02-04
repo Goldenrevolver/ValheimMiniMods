@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using UnityEngine;
 using static InstantlyDestroyBoatsAndCarts.InstantlyDestroyBoatsAndCartsPlugin;
 
 namespace InstantlyDestroyBoatsAndCarts
@@ -13,8 +14,18 @@ namespace InstantlyDestroyBoatsAndCarts
                 Ship ship = __instance.GetComponentInChildren<Ship>();
                 Vagon vagon = __instance.GetComponentInChildren<Vagon>();
 
-                if (ship || vagon)
+                if (vagon)
                 {
+                    __instance.m_canBeRemoved = true;
+                }
+
+                if (ship)
+                {
+                    if (IsValheimRaft(ship))
+                    {
+                        return;
+                    }
+
                     __instance.m_canBeRemoved = true;
                 }
             }
@@ -33,11 +44,16 @@ namespace InstantlyDestroyBoatsAndCarts
                     return true;
                 }
 
+                if (ship && IsValheimRaft(ship))
+                {
+                    return true;
+                }
+
                 __result = false;
 
                 var config = AllowDestroyFor.Value;
 
-                if (ship != null && (config == AllowDestroy.OnlyBoats || config == AllowDestroy.Both))
+                if (ship && (config == AllowDestroy.OnlyBoats || config == AllowDestroy.Both))
                 {
                     Container container = __instance.GetComponentInChildren<Container>();
 
@@ -51,7 +67,7 @@ namespace InstantlyDestroyBoatsAndCarts
                     return false;
                 }
 
-                if (cart != null && (config == AllowDestroy.OnlyCarts || config == AllowDestroy.Both))
+                if (cart && (config == AllowDestroy.OnlyCarts || config == AllowDestroy.Both))
                 {
                     if (!CanRemoveContainer(cart.m_container))
                     {
@@ -82,6 +98,24 @@ namespace InstantlyDestroyBoatsAndCarts
             }
 
             return true;
+        }
+
+        private static bool IsValheimRaft(Ship ship)
+        {
+            if (ship.name.StartsWith("MBRaft"))
+            {
+                return true;
+            }
+
+            foreach (var shipComponent in ship.GetComponents<Component>())
+            {
+                if (shipComponent.GetType().Name == "MoveableBaseShipComponent")
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
