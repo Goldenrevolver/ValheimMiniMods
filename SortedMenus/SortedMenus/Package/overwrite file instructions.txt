@@ -1,0 +1,26 @@
+First, get the internal name of your native language by visiting https://valheim-modding.github.io/Jotunn/data/localization/language-list.html and copying the respective name in the 'Folder Name' column.
+
+Then create two files called (or copy and rename the English one as a template):
+- SortedMenus.NameOverwrites.<your language>.json
+- SortedMenus.SortOverwrites.<your language>.json
+
+These files are json files that use the internal translation key of the item on the left side. To find these for each item you can also use the same website: https://valheim-modding.github.io/Jotunn/data/localization/translations/English.html
+
+DON'T forget to start the left side with a leading $. These are translation keys, not prefab names!
+
+
+## Name Overwrites:
+
+Name overwrites replace the entire display name, so be sure to write exactly what you want to see ingame on the right side.
+
+
+## Sort Overwrites:
+
+Sort overwrites add something to the start (a prefix) of the to be translated name solely for the purpose of sorting. This can include other translation key names, as can be seen in the English file, but you can also simply write a completely new word in there without a leading '$'. If you want your item to appear directly before or directly behind items with the same prefix, then an easy trick is to put an 'a' or 'z' after the prefix.
+
+Sort overwrites are applied after name overwrites, so you can rename an item and then adjust its sort position after that.
+
+
+## Done?
+
+Great, now simply throw those two files into the plugins folder (where the dll is) and my mod should find them. If you think your files would be great for others too, then consider sending them to me via a nexus forum personal message, so I can include it in the mod.

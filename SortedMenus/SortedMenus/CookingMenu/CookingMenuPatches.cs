@@ -39,7 +39,7 @@ namespace SortedMenus
                 return;
             }
 
-            if (SortConfig.CheckIfItemIsProduceInOvenOrCookingStation.Value)
+            if (SortConfig.CheckIfItemIsInputForOvenOrCookingStation.Value)
             {
                 UpdateCookingStationAndOvenRecipeList();
             }

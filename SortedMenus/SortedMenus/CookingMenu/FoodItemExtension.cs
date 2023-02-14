@@ -16,7 +16,7 @@
 
         private static bool IsOrCanBeEdible(ref ItemDrop.ItemData item)
         {
-            if (SortConfig.CheckIfItemIsProduceInOvenOrCookingStation.Value && CookingMenuPatches.cookingStationAndOvenRecipes.TryGetValue(item.m_shared.m_name, out ItemDrop.ItemData cookingStationOutput))
+            if (SortConfig.CheckIfItemIsInputForOvenOrCookingStation.Value && CookingMenuPatches.cookingStationAndOvenRecipes.TryGetValue(item.m_shared.m_name, out ItemDrop.ItemData cookingStationOutput))
             {
                 item = cookingStationOutput;
             }
@@ -57,7 +57,7 @@
             float thisTotal = thisHS.health + thisHS.stamina;
             float otherTotal = otherHS.health + otherHS.stamina;
 
-            if (SortConfig.SortPotionsAndOtherInediblesToBottom.Value && (thisTotal == 0 || otherTotal == 0))
+            if (SortConfig.SortInediblesToBottom.Value && (thisTotal == 0 || otherTotal == 0))
             {
                 if (otherTotal != 0)
                 {

@@ -1,7 +1,19 @@
 ﻿namespace SortedMenus
 {
-    internal static class ItemCompareExtension
+    internal static class CustomItemSortExtension
     {
+        internal static string GetCompareName(this ItemDrop.ItemData item)
+        {
+            string itemName = item.m_shared.m_name;
+
+            if (ItemSortOverrider.sortOverrides.TryGetValue(itemName, out string overrideName))
+            {
+                return overrideName;
+            }
+
+            return itemName;
+        }
+
         internal static int CompareItemWithArmorOverridesTo(this ItemDrop.ItemData thisItem, ItemDrop.ItemData otherItem)
         {
             string thisFirstCompare = thisItem.GetCompareName();

@@ -1,0 +1,23 @@
+{
+	"$item_knife_copper": "$item_bronze z",
+
+	"$item_bow_huntsman": "$item_iron a",
+	"$item_spear_ancientbark": "$item_iron a",
+
+	"$item_battleaxe_crystal": "$item_silver a",
+	"$item_fistweapon_fenris": "$item_silver a",
+	"$item_spear_wolffang": "$item_silver a",
+	"$item_mace_silver": "$item_silver a",
+	"$item_bow_draugrfang": "$item_silver a",
+
+	"$item_mace_needle": "$item_blackmetal z",
+
+	"$item_atgeir_himminafl": "$item_sword_mistwalker",
+	"$item_bow_snipesnap": "$item_sword_mistwalker",
+	"$item_axe_jotunbane": "$item_sword_mistwalker",
+	"$item_spear_carapace": "$item_sword_mistwalker",
+	"$item_sledge_demolisher": "$item_sword_mistwalker",
+	"$item_sword_krom": "$item_sword_mistwalker",
+	"$item_knife_skollandhati": "$item_sword_mistwalker",
+	"$item_crossbow_arbalest": "$item_sword_mistwalker"
+}

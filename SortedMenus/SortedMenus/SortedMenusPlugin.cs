@@ -9,7 +9,7 @@ namespace SortedMenus
     public class SortedMenusPlugin : BaseUnityPlugin
     {
         public const string NAME = "Sorted Cooking, Crafting and Skills Menu";
-        public const string VERSION = "1.0.0";
+        public const string VERSION = "1.1.0";
 
         private const string combineSkillsMod = "goldenrevolver.CombineSpearAndPolearmSkills";
 
@@ -21,7 +21,7 @@ namespace SortedMenus
 
             if (HasCombinedSkillsModInstalled())
             {
-                UnityEngine.Debug.Log($"{NAME}: 'Combine Skills' is installed, disabling skills menu sorting");
+                Helper.Log($"{NAME}: 'Combine Skills' is installed, disabling skills menu sorting");
             }
         }
 
