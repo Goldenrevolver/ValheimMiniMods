@@ -46,8 +46,6 @@ namespace SortedMenus
 
             var nameOverwriteFilesFound = Directory.GetFiles(Path.GetDirectoryName(Paths.PluginPath), $"{infix}.*.json", SearchOption.AllDirectories);
 
-            bool externalFileLoaded = false;
-
             foreach (var overwriteFilePath in nameOverwriteFilesFound)
             {
                 var languageKey = Path.GetFileNameWithoutExtension(overwriteFilePath).Split('.')[2];
@@ -71,7 +69,9 @@ namespace SortedMenus
                 }
             }
 
-            if (!externalFileLoaded && supportedEmbeddedLanguages.Contains(currentLanguage))
+            // if we arrived here, then no external file successfully loaded
+
+            if (supportedEmbeddedLanguages.Contains(currentLanguage))
             {
                 Helper.Log(string.Format(loadingLog, embedded, infix, currentLanguage));
 

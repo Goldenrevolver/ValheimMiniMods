@@ -26,9 +26,9 @@ namespace SortedMenus
                 return;
             }
 
-            if (importedNameOverwrites.ContainsKey(word))
+            if (importedNameOverwrites.TryGetValue(word, out string customItemName))
             {
-                __result = importedNameOverwrites[word];
+                __result = customItemName;
             }
         }
 

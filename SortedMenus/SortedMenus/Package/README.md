@@ -31,7 +31,7 @@ A few examples from the default english file:
 - 'Porcupine' is sorted as a black metal mace and all instances of 'blackmetal' are replaced with 'black metal'
 - the mistlands tier weapons stay sorted together (without actual renaming)
 
-Of course not every language conveniently puts the material at the beginning of the name to making sorting easy (for example using 'Axe out of Iron' instead of 'Iron Axe'), so this system does not work for everyone. But feel free to send me overwrite files for your native language if it works for it.
+Of course not every language conveniently puts the material at the beginning of the name to make sorting easy (for example using 'Axe out of Iron' instead of 'Iron Axe'), so this system does not work for everyone. But feel free to send me overwrite files for your native language if it works for it.
 
 
 ## 3 - Skills Menu

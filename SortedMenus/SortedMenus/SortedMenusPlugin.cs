@@ -9,7 +9,7 @@ namespace SortedMenus
     public class SortedMenusPlugin : BaseUnityPlugin
     {
         public const string NAME = "Sorted Cooking, Crafting and Skills Menu";
-        public const string VERSION = "1.1.0";
+        public const string VERSION = "1.1.1";
 
         private const string combineSkillsMod = "goldenrevolver.CombineSpearAndPolearmSkills";
 
