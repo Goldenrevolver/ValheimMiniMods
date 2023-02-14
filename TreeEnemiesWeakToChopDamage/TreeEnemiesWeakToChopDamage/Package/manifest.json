@@ -1,0 +1,9 @@
+{
+  "name": "Tree_Enemies_Are_Weak_To_Axe_Damage",
+  "description": "Makes all tree based enemies weak to axe/ chop damage, and optionally resistant to lightning damage",
+  "version_number": "1.0.0",
+  "website_url": "https://github.com/Goldenrevolver/ValheimMiniMods",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.1901"
+  ]
+}
