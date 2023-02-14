@@ -1,0 +1,9 @@
+{
+  "name": "Boss_Altar_Rule_of_Three",
+  "description": "Changes the Yagluth boss altar to only require three items, also does the same for the Eikthyr altar",
+  "version_number": "1.0.0",
+  "website_url": "https://github.com/Goldenrevolver/ValheimMiniMods",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.1901"
+  ]
+}
