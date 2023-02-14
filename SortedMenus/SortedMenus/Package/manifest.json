@@ -1,0 +1,9 @@
+{
+  "name": "Sorted_Menus_Cooking_Crafting_and_Skills_Menu",
+  "description": "Sorts the cooking, crafting and skills menu by configurable parameters",
+  "version_number": "1.0.0",
+  "website_url": "https://github.com/Goldenrevolver/ValheimMiniMods",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.1901"
+  ]
+}
