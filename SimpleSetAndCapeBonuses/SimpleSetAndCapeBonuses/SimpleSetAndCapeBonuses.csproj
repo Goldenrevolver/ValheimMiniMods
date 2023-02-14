@@ -42,11 +42,11 @@
       <HintPath>$(GameDir)\BepInEx\core\BepInEx.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="assembly_valheim_publicized">
+    <Reference Include="assembly_valheim">
       <HintPath>$(GameDir)\valheim_Data\Managed\publicized_assemblies\assembly_valheim_publicized.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="assembly_guiutils_publicized">
+    <Reference Include="assembly_guiutils">
       <HintPath>$(GameDir)\valheim_Data\Managed\publicized_assemblies\assembly_guiutils_publicized.dll</HintPath>
       <Private>False</Private>
     </Reference>
