@@ -9,7 +9,7 @@ This is a companion mod to my other mod [Tree Enemies Are Weak To Axe Damage](h
 
 Some of you may know that greylings and normal greydwarves actually avoid fire, meaning that they pathfind around it. With this mod you can make all greydwarves, including brutes, shamans and even modded greydwarves run in terror when they encounter fire (similar to boars). You can change the fear level for them individually in the config file.
 
-By default, this requires you to have killed the Elder, as well for the greydwarf to be innately weak to fire (so it does not affect some kind of modded water or coal greydwarf). You can also change this to update dynamically, so they would for example stop fearing fire when it's raining (since the 'wet' debuff eliminates their fire weakness), but this is disabled by default.
+By default, this requires you to have killed the Elder, as well as for the greydwarf to be innately weak to fire (so it does not affect some kind of modded water or coal greydwarf). You can also change this to update dynamically, so they would for example stop fearing fire when it's raining (since the 'wet' debuff eliminates their fire weakness), but this is disabled by default.
 
 This mod is required to be installed on the server and by all clients.
 
