@@ -8,8 +8,7 @@ namespace ResizableBossTrophies
     [HarmonyPatch(typeof(ItemDrop.ItemData))]
     internal static class PatchItemDrop
     {
-        [HarmonyPatch(nameof(ItemDrop.ItemData.GetScale), new Type[] { typeof(float) })]
-        [HarmonyPostfix]
+        [HarmonyPatch(nameof(ItemDrop.ItemData.GetScale), new Type[] { typeof(float) }), HarmonyPostfix]
         public static void GetScale_Postfix(ItemDrop.ItemData __instance, ref Vector3 __result)
         {
             switch (__instance.m_shared.m_name)
@@ -70,6 +69,20 @@ namespace ResizableBossTrophies
 
                 case "$item_trophy_lox":
                     __result *= LoxTrophySize.Value;
+                    break;
+
+                case "$item_trophy_gjall":
+                    __result *= GjallTrophySize.Value;
+                    break;
+
+                case "$item_trophy_seeker_brute":
+
+                    __result *= SeekerSoldierTrophySize.Value;
+                    break;
+
+                case "$item_trophy_seeker":
+
+                    __result *= SeekerTrophySize.Value;
                     break;
             }
         }
