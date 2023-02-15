@@ -21,7 +21,7 @@ The armor set feature works for all base game and most modded armors. I tested t
 ![image](https://staticdelivery.nexusmods.com/mods/3667/images/2270/2270-1676385586-546054334.png)![image](https://staticdelivery.nexusmods.com/mods/3667/images/2270/2270-1676385596-1416742755.png)![image](https://staticdelivery.nexusmods.com/mods/3667/images/2270/2270-1676385603-1785674697.png)\
 
 
-### 2.1 - Custom Name or Sort Overwrites
+### 2.1 - Custom Sort or Name Overwrites
 
 Even with the custom armor sorting rules, a few items, especially weapons, would be sorted into weird places. So this mod includes a sort overwrite system as well as a lightweight item rename system to customize your sorting experience using json files.
 

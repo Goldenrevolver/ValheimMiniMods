@@ -11,27 +11,38 @@ namespace SortedMenus
         {
             sortOverrides.Clear();
 
+            // add base game armor sort overwrites first
             if (SortConfig.KeepArmorSetsTogether.Value != ArmorSetSorting.Disabled)
             {
-                UpdateArmorSortOverrides();
-
-                if (SortConfig.KeepArmorSetsTogether.Value == ArmorSetSorting.EnabledWithModSupport)
-                {
-                    AddModdedArmorSortOverrides(recipes);
-                }
+                AddBaseGameArmorSortOverwrites();
             }
 
+            // then custom sort overwrites are allowed to overwrite it
             if (SortConfig.EnableCustomSortOverrides.Value)
             {
                 AddCustomSortOverrides();
             }
+
+            // then we only try to add automatic modded sort overwrites if there is no overwrite already
+            if (SortConfig.KeepArmorSetsTogether.Value == ArmorSetSorting.EnabledWithModSupport)
+            {
+                MaybeAddModdedArmorSortOverrides(recipes);
+            }
         }
 
-        private static void UpdateArmorSortOverrides()
+        private static void AddBaseGameArmorSortOverwrites()
         {
             foreach (var item in OverwritePatches.baseGameArmorSortOverwrites)
             {
                 sortOverrides[item.Key] = item.Value;
+            }
+
+            if (SortConfig.KeepArmorSetsTogether.Value == ArmorSetSorting.EnabledWithModSupport)
+            {
+                if (Chainloader.PluginInfos.ContainsKey("goldenrevolver.SimpleSetAndCapeBonuses"))
+                {
+                    sortOverrides["$item_helmet_midsummercrown"] = "$item_chest_rags";
+                }
             }
         }
 
@@ -49,13 +60,8 @@ namespace SortedMenus
         }
 
         // prepare in advance, so the comparator does not need to constantly evaluate that
-        private static void AddModdedArmorSortOverrides(List<Recipe> recipes)
+        private static void MaybeAddModdedArmorSortOverrides(List<Recipe> recipes)
         {
-            if (Chainloader.PluginInfos.ContainsKey("goldenrevolver.SimpleSetAndCapeBonuses"))
-            {
-                sortOverrides["$item_helmet_midsummercrown"] = "$item_chest_rags";
-            }
-
             foreach (var recipe in recipes)
             {
                 if (recipe == null || !recipe.m_item || recipe.m_item.m_itemData == null)
@@ -70,6 +76,11 @@ namespace SortedMenus
         private static void MaybeAddModdedOverride(ItemDrop.ItemData item)
         {
             if (!item.IsOverridableArmor())
+            {
+                return;
+            }
+
+            if (sortOverrides.ContainsKey(item.m_shared.m_name))
             {
                 return;
             }
