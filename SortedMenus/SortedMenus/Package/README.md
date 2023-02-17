@@ -38,6 +38,8 @@ Of course not every language conveniently puts the material at the beginning of 
 
 This feature simply sorts your skills by the current level or by name.
 
+This feature is incompatible with [Project Auga](https://valheim.thunderstore.io/package/RandyKnapp/Auga/) because it ignores the default skill list.
+
 Do be aware that the base game currently has a bug where the length of the level bar does not perfectly reflect your actual level (e.g. two skills at level 10 can have different lengths in the skills menu, independent of the actual level up progress), but the sorting is always correct.
 
 ![image](https://staticdelivery.nexusmods.com/mods/3667/images/2270/2270-1676335278-1719431038.png)

@@ -9,25 +9,31 @@ namespace SortedMenus
     public class SortedMenusPlugin : BaseUnityPlugin
     {
         public const string NAME = "Sorted Cooking, Crafting and Skills Menu";
-        public const string VERSION = "1.1.1";
+        public const string VERSION = "1.1.2";
 
         private const string combineSkillsMod = "goldenrevolver.CombineSpearAndPolearmSkills";
+        private const string augaMod = "randyknapp.mods.auga";
 
         protected void Start()
         {
             SortConfig.LoadConfig(this);
 
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
+        }
 
-            if (HasCombinedSkillsModInstalled())
-            {
-                Helper.Log($"{NAME}: 'Combine Skills' is installed, disabling skills menu sorting");
-            }
+        internal static bool HasSkillsMenuIncompatibleModInstalled()
+        {
+            return HasCombinedSkillsModInstalled() || HasAugaInstalled();
         }
 
         internal static bool HasCombinedSkillsModInstalled()
         {
             return Chainloader.PluginInfos.ContainsKey(combineSkillsMod);
+        }
+
+        internal static bool HasAugaInstalled()
+        {
+            return Chainloader.PluginInfos.ContainsKey(augaMod);
         }
     }
 

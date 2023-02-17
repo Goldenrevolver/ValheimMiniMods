@@ -59,10 +59,10 @@ namespace SortedMenus
 
             sectionName = "2 - Skills Menu";
 
-            SkillsMenuSorting = config.Bind(sectionName, nameof(SkillsMenuSorting), SortSkillsMenu.ByLevel, SeeOnlyDisplay(SortedMenusPlugin.HasCombinedSkillsModInstalled, string.Empty, "Skills menu sorting from this mod is disabled in favor of the skills menu sorting of the 'Combine Skills' mod.", "Disabled in favor of 'Combine Skills' mod"));
+            SkillsMenuSorting = config.Bind(sectionName, nameof(SkillsMenuSorting), SortSkillsMenu.ByLevel, CustomSeeOnlyDisplay(string.Empty));
             SkillsMenuSorting.SettingChanged += SkillsMenuSettingChanged;
 
-            UpdateSkillsMenuOnChange = config.Bind(sectionName, nameof(UpdateSkillsMenuOnChange), UpdateSkillsMenu.EnabledExceptRunSkill, HiddenDisplay(SortedMenusPlugin.HasCombinedSkillsModInstalled, "Skills menu updates when changing gear or leveling up instead of requiring to be closed and reopened."));
+            UpdateSkillsMenuOnChange = config.Bind(sectionName, nameof(UpdateSkillsMenuOnChange), UpdateSkillsMenu.EnabledExceptRunSkill, HiddenDisplay(SortedMenusPlugin.HasSkillsMenuIncompatibleModInstalled, "Skills menu updates when changing gear or leveling up instead of requiring to be closed and reopened."));
             UpdateSkillsMenuOnChange.SettingChanged += SkillsMenuSettingChanged;
 
             // clean up config file from 1.0

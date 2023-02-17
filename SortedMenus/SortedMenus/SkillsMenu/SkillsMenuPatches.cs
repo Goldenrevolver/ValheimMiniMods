@@ -10,7 +10,7 @@ namespace SortedMenus
         [HarmonyPatch(typeof(Skills), nameof(Skills.GetSkillList)), HarmonyPostfix]
         private static void GetUISkillListPatch(ref List<Skills.Skill> __result)
         {
-            if (SortedMenusPlugin.HasCombinedSkillsModInstalled())
+            if (SortedMenusPlugin.HasSkillsMenuIncompatibleModInstalled())
             {
                 return;
             }
@@ -68,11 +68,27 @@ namespace SortedMenus
             UpdateSkillsMenu(Player.m_localPlayer);
         }
 
+        private static bool safeToCallSetup = false;
+
+        [HarmonyPatch(typeof(SkillsDialog), nameof(SkillsDialog.Setup)), HarmonyPostfix]
+        private static void AfterFirstSkillsDialogSetup()
+        {
+            safeToCallSetup = true;
+        }
+
+        [HarmonyPatch(typeof(Game), nameof(Game.Logout)), HarmonyPrefix]
+        internal static void ResetOnLogout()
+        {
+            safeToCallSetup = false;
+        }
+
         internal static void UpdateSkillsMenu(Player player)
         {
-            if (SortedMenusPlugin.HasCombinedSkillsModInstalled()
+            if (!safeToCallSetup
+                || SortedMenusPlugin.HasSkillsMenuIncompatibleModInstalled()
                 || SortConfig.UpdateSkillsMenuOnChange.Value == SortedMenus.UpdateSkillsMenu.Disabled
                 || !InventoryGui.instance || !InventoryGui.instance.m_skillsDialog
+                || !InventoryGui.instance.m_skillsDialog.gameObject
                 || !InventoryGui.instance.m_skillsDialog.gameObject.activeSelf
                 || !Player.m_localPlayer || player != Player.m_localPlayer)
             {

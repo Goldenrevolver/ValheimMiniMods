@@ -1,5 +1,7 @@
 # Changelog
 
+## 1.1.2
+- Fixed skills menu update breaking when using Project Auga (because it deletes it)
 ## 1.1.1
 - Performance: modded armor sort overwrite checks are skipped if there is already a custom overwrite for it
 ## 1.1.0

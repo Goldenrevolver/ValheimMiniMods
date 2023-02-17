@@ -46,6 +46,22 @@ namespace SortedMenus
             }
         }
 
+        internal static ConfigDescription CustomSeeOnlyDisplay(string description, AcceptableValueBase acceptableValues = null)
+        {
+            if (SortedMenusPlugin.HasAugaInstalled())
+            {
+                return new ConfigDescription("Skills menu sorting from this mod is incompatible with AUGA", acceptableValues, new ConfigurationManagerAttributes() { ReadOnly = true, CustomDrawer = (a) => CustomLabelDrawer("Disabled due to using AUGA") });
+            }
+            else if (SortedMenusPlugin.HasCombinedSkillsModInstalled())
+            {
+                return new ConfigDescription("Skills menu sorting from this mod is disabled in favor of the skills menu sorting of the 'Combine Skills' mod.", acceptableValues, new ConfigurationManagerAttributes() { ReadOnly = true, CustomDrawer = (a) => CustomLabelDrawer("Disabled in favor of 'Combine Skills' mod") });
+            }
+            else
+            {
+                return new ConfigDescription(description, acceptableValues);
+            }
+        }
+
         internal static ConfigDescription SeeOnlyDisplay(Func<bool> condition, string description, string overwriteDescription, string overwriteLabel, AcceptableValueBase acceptableValues = null)
         {
             if (condition.Invoke())
