@@ -29,6 +29,7 @@ namespace SortedMenus
         internal static ConfigEntry<UpdateSkillsMenu> UpdateSkillsMenuOnChange;
 
         internal static ConfigEntry<bool> EnableDebugLogs;
+        internal static ConfigEntry<bool> EnablePerformanceMode;
 
         private static ConfigFile config;
 
@@ -88,6 +89,14 @@ namespace SortedMenus
             sectionName = "9 - Other";
 
             EnableDebugLogs = config.Bind(sectionName, nameof(EnableDebugLogs), false, "Mostly shows loading logs for custom name and sorting overwrite files.");
+            EnablePerformanceMode = config.Bind(sectionName, nameof(EnablePerformanceMode), true, "This speeds up the sorting by saving (caching) the result of the last sorting for the base game crafting stations.");
+
+            config.SettingChanged += Config_SettingChanged;
+        }
+
+        private static void Config_SettingChanged(object sender, SettingChangedEventArgs e)
+        {
+            SortedRecipeCaches.InvalidateCaches();
         }
 
         private static void SkillsMenuSettingChanged(object sender, EventArgs e)
@@ -169,9 +178,11 @@ namespace SortedMenus
     {
         Disabled = 0,
         ByName = 1,
-        ByTotalThenHealth = 2,
-        ByTotalThenStamina = 3,
-        ByHealthThenTotal = 4,
-        ByStaminaThenTotal = 5,
+        ByTotalThenHealth = 10,
+        ByTotalThenStamina = 11,
+        ByTotalThenEitr = 12,
+        ByHealthThenTotal = 20,
+        ByStaminaThenTotal = 21,
+        ByEitrThenTotal = 22,
     }
 }

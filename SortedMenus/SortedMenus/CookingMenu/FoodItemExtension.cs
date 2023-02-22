@@ -2,15 +2,19 @@
 {
     internal static class FoodItemExtension
     {
-        internal struct HealthAndStamina
+        internal readonly struct StatsWhenEaten
         {
-            internal float health;
-            internal float stamina;
+            internal readonly float health;
+            internal readonly float stamina;
+            internal readonly float eitr;
+            internal readonly float total;
 
-            public HealthAndStamina(float health, float stamina)
+            public StatsWhenEaten(float health, float stamina, float eitr)
             {
                 this.health = health;
                 this.stamina = stamina;
+                this.eitr = eitr;
+                this.total = health + stamina + eitr;
             }
         }
 
@@ -31,45 +35,35 @@
                 return 0;
             }
 
-            return item.m_shared.m_food + item.m_shared.m_foodStamina;
+            return item.m_shared.m_food + item.m_shared.m_foodStamina + item.m_shared.m_foodEitr;
         }
 
-        internal static HealthAndStamina GetHealthAndStamina(this ItemDrop.ItemData item)
+        internal static StatsWhenEaten GetStatsWhenEaten(this ItemDrop.ItemData item)
         {
             if (!IsOrCanBeEdible(ref item))
             {
-                return new HealthAndStamina(0, 0);
+                return new StatsWhenEaten(0, 0, 0);
             }
 
-            return new HealthAndStamina(item.m_shared.m_food, item.m_shared.m_foodStamina);
+            return new StatsWhenEaten(item.m_shared.m_food, item.m_shared.m_foodStamina, item.m_shared.m_foodEitr);
         }
 
         internal static int CompareFoodByConfig(this ItemDrop.ItemData thisItem, ItemDrop.ItemData otherItem)
         {
-            if (thisItem == null || otherItem == null)
+            var thisStats = thisItem.GetStatsWhenEaten();
+            var otherStats = otherItem.GetStatsWhenEaten();
+
+            int totalComp = thisStats.total.CompareTo(otherStats.total);
+
+            if (SortConfig.SortInediblesToBottom.Value && (thisStats.total == 0 || otherStats.total == 0))
             {
-                return (thisItem != null).CompareTo(otherItem != null);
-            }
-
-            var thisHS = thisItem.GetHealthAndStamina();
-            var otherHS = otherItem.GetHealthAndStamina();
-
-            float thisTotal = thisHS.health + thisHS.stamina;
-            float otherTotal = otherHS.health + otherHS.stamina;
-
-            if (SortConfig.SortInediblesToBottom.Value && (thisTotal == 0 || otherTotal == 0))
-            {
-                if (otherTotal != 0)
+                if (totalComp != 0)
                 {
-                    return 1;
-                }
-                else if (thisTotal != 0)
-                {
-                    return -1;
+                    return -totalComp;
                 }
             }
 
-            if (thisTotal == 0 && otherTotal == 0)
+            if (thisStats.total == 0 && otherStats.total == 0)
             {
                 // sort fishing bait to the bottom bottom
                 int ammoComp = thisItem.IsAmmo().CompareTo(otherItem.IsAmmo());
@@ -84,15 +78,16 @@
                 }
             }
 
-            int totalComp = thisTotal.CompareTo(otherTotal);
-            int healthComp = thisHS.health.CompareTo(otherHS.health);
-            int staminaComp = thisHS.stamina.CompareTo(otherHS.stamina);
+            int healthComp = thisStats.health.CompareTo(otherStats.health);
+            int staminaComp = thisStats.stamina.CompareTo(otherStats.stamina);
+            int eitrComp = thisStats.eitr.CompareTo(otherStats.eitr);
 
             if (!SortConfig.SortFoodInAscendingOrder.Value)
             {
                 totalComp *= -1;
                 healthComp *= -1;
                 staminaComp *= -1;
+                eitrComp *= -1;
             }
 
             switch (SortConfig.CookingMenuSorting.Value)
@@ -119,6 +114,17 @@
                     }
                     break;
 
+                case SortCookingMenu.ByTotalThenEitr:
+                    if (totalComp != 0)
+                    {
+                        return totalComp;
+                    }
+                    else if (eitrComp != 0)
+                    {
+                        return eitrComp;
+                    }
+                    break;
+
                 case SortCookingMenu.ByHealthThenTotal:
                     if (healthComp != 0)
                     {
@@ -134,6 +140,17 @@
                     if (staminaComp != 0)
                     {
                         return staminaComp;
+                    }
+                    else if (totalComp != 0)
+                    {
+                        return totalComp;
+                    }
+                    break;
+
+                case SortCookingMenu.ByEitrThenTotal:
+                    if (eitrComp != 0)
+                    {
+                        return eitrComp;
                     }
                     else if (totalComp != 0)
                     {

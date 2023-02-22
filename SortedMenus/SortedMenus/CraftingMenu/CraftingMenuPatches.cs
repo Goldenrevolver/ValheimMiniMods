@@ -6,9 +6,11 @@ namespace SortedMenus
     [HarmonyPatch]
     internal class CraftingMenuPatches
     {
+        internal const string handCrafting = "hand crafting";
+
         [HarmonyPriority(Priority.VeryLow)]
         [HarmonyPatch(typeof(InventoryGui), nameof(InventoryGui.UpdateRecipeList)), HarmonyPrefix]
-        private static void UpdateRecipeList(List<Recipe> recipes)
+        private static void UpdateRecipeList(ref List<Recipe> recipes)
         {
             if (!Player.m_localPlayer)
             {
@@ -28,18 +30,58 @@ namespace SortedMenus
                 return;
             }
 
-            string stationName = !currentCraftingStation ? "hand crafting" : currentCraftingStation.m_name;
+            string stationName = !currentCraftingStation ? handCrafting : currentCraftingStation.m_name;
 
             if (stationName == "$piece_cauldron")
             {
                 return;
             }
 
-            var stationType = stationName == "$piece_forge" ? CraftingStationType.Forge : CraftingStationType.Other;
+            List<Recipe> relevantCache = null;
+            CraftingStationType stationType = CraftingStationType.Other;
 
-            ItemSortOverrider.UpdateSortOverrides(recipes);
+            if (stationName == "$piece_forge")
+            {
+                stationType = CraftingStationType.Forge;
 
-            recipes.Sort((recipeA, recipeB) => recipeA.CompareRecipeTo(recipeB, stationType));
+                if (Player.m_localPlayer.NoCostCheat())
+                {
+                    relevantCache = SortedRecipeCaches.cachedSortedNoCostRecipes;
+                }
+                else
+                {
+                    relevantCache = SortedRecipeCaches.cachedSortedForgeRecipes;
+                }
+            }
+            else if (stationName == "$piece_workbench")
+            {
+                if (Player.m_localPlayer.NoCostCheat())
+                {
+                    relevantCache = SortedRecipeCaches.cachedSortedNoCostRecipes;
+                }
+                else
+                {
+                    relevantCache = SortedRecipeCaches.cachedSortedWorkBenchRecipes;
+                }
+            }
+            else if (stationName == handCrafting && Player.m_localPlayer.NoCostCheat())
+            {
+                relevantCache = SortedRecipeCaches.cachedSortedNoCostRecipes;
+            }
+
+            var sw = new System.Diagnostics.Stopwatch();
+            sw.Start();
+
+            if (!SortedRecipeCaches.TryReapplySorting(ref recipes, relevantCache))
+            {
+                ItemSortOverrider.UpdateSortOverrides(recipes);
+
+                recipes.Sort((recipeA, recipeB) => recipeA.CompareRecipeTo(recipeB, stationType));
+                SortedRecipeCaches.UpdateSortCache(recipes, relevantCache);
+            }
+
+            sw.Stop();
+            Helper.Log($"Time to sort {recipes.Count} recipes: {sw.Elapsed}");
         }
     }
 }
