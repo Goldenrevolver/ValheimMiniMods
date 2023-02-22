@@ -19,20 +19,30 @@ namespace SortedMenus
             InvalidateCaches();
         }
 
+        // it's important that this is a prefix patch, because the recipe is already learned in postfix
         [HarmonyPatch(typeof(Player), nameof(Player.AddKnownRecipe)), HarmonyPrefix]
         internal static void ResetOnAddNewRecipe(Player __instance, Recipe recipe)
         {
-            // it's important that this is a prefix patch
+            if (!__instance || __instance != Player.m_localPlayer)
+            {
+                return;
+            }
+
             if (!__instance.m_knownRecipes.Contains(recipe.m_item.m_itemData.m_shared.m_name))
             {
                 InvalidateCaches();
             }
         }
 
+        // it's important that this is a prefix patch, because the recipe is already learned in postfix
         [HarmonyPatch(typeof(Player), nameof(Player.AddKnownPiece)), HarmonyPrefix]
         internal static void ResetOnAddNewPiece(Player __instance, Piece piece)
         {
-            // it's important that this is a prefix patch
+            if (!__instance || __instance != Player.m_localPlayer)
+            {
+                return;
+            }
+
             if (!__instance.m_knownRecipes.Contains(piece.m_name))
             {
                 InvalidateCaches();
@@ -50,6 +60,11 @@ namespace SortedMenus
 
         internal static void UpdateSortCache(List<Recipe> newSortedList, List<Recipe> oldSortedList)
         {
+            if (oldSortedList == null)
+            {
+                return;
+            }
+
             oldSortedList.Clear();
             oldSortedList.AddRange(newSortedList);
         }
