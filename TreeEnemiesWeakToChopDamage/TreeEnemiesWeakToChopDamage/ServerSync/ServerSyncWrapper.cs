@@ -12,10 +12,15 @@ namespace TreeEnemiesWeakToChopDamage
             return new ConfigSync(guid) { DisplayName = displayName, CurrentVersion = version, MinimumRequiredVersion = version, ModRequired = true };
         }
 
-        internal static ConfigEntry<bool> BindForceEnabledSyncLocker(this ConfigFile configFile, ConfigSync serverSyncInstance, string group, string name)
+        public enum SyncEnabled
         {
-            ConfigEntry<bool> configEntry = configFile.Bind(group, name, true, ForceEnabledDisplay("It's required that the mod is installed on the server and all clients. Changing this setting does nothing, ServerSync is always enabled."));
-            configEntry.Value = true;
+            Enabled = 1
+        }
+
+        internal static ConfigEntry<SyncEnabled> BindForceEnabledSyncLocker(this ConfigFile configFile, ConfigSync serverSyncInstance, string group, string name)
+        {
+            ConfigEntry<SyncEnabled> configEntry = configFile.Bind(group, name, SyncEnabled.Enabled, ForceEnabledDisplay("It's required that the mod is installed on the server and all clients. Changing this setting does nothing, ServerSync is always enabled."));
+            configEntry.Value = SyncEnabled.Enabled;
 
             serverSyncInstance.AddLockingConfigEntry(configEntry);
 

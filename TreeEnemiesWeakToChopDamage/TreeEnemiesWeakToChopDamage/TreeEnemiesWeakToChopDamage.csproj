@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChopConfig.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="PatchCharacter.cs" />
     <Compile Include="PatchTooltip.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

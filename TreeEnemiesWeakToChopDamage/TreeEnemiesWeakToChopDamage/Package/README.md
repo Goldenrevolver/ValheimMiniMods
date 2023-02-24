@@ -18,6 +18,8 @@ The weaknesses of the different tree based enemy types are configurable in the c
 
 Since the base game doesn't show you the chop damage of your axe, I added it into the tooltip.
 
+There is also the option to fix the color of the damage number to priorise chop damage over slash damage (that's why trees show grey numbers when using some axes).
+
 
 ## Lightning resistance
 
@@ -25,6 +27,12 @@ Additionally, this mod can also add lightning resistance or even immunity to tre
 
 The resistances of the different tree based enemy types are configurable in the config, which is also server synced.
 
+
+## Slash resistance
+
+If that wasn't enough, this mod can also optionally increase the slash resistance of tree based enemies by one level, weakness would turn into normal damage, normal damage into resistance etc., affecting everything from axes to swords to daggers. This is not recommended with the default axe/ chop damage weakness settings!
+
+The resistance increase of the different tree based enemy types are configurable in the config, which is also server synced.
 
 ## Compatibility
 

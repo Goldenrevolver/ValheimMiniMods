@@ -6,6 +6,20 @@ namespace TreeEnemiesWeakToChopDamage
     [HarmonyPatch]
     internal class PatchTooltip
     {
+        [HarmonyPatch(typeof(HitData), nameof(HitData.ApplyResistance)), HarmonyPostfix]
+        public static void ApplyResistance(HitData __instance, DamageModifiers modifiers, ref HitData.DamageModifier significantModifier)
+        {
+            if (!ChopConfig.PrioritiseChopDamageDisplayColor.Value)
+            {
+                return;
+            }
+
+            if (__instance.m_damage.m_chop > 0f && modifiers.m_chop != DamageModifier.Immune && modifiers.m_chop != DamageModifier.Ignore)
+            {
+                significantModifier = DamageModifier.Weak;
+            }
+        }
+
         [HarmonyPatch(typeof(DamageTypes), nameof(DamageTypes.GetTooltipString), new[] { typeof(Skills.SkillType) }), HarmonyPostfix]
         public static void GetTooltipString(DamageTypes __instance, Skills.SkillType skillType, ref string __result)
         {

@@ -1,6 +1,5 @@
 ﻿using HarmonyLib;
 using System.Collections.Generic;
-using UnityEngine;
 using static HitData;
 using static TreeEnemiesWeakToChopDamage.ChopConfig;
 
@@ -9,26 +8,6 @@ namespace TreeEnemiesWeakToChopDamage
     [HarmonyPatch]
     internal static class PatchCharacter
     {
-        private static void Log(string message)
-        {
-            Debug.Log($"{TreeEnemiesWeakToChopDamagePlugin.NAME} {TreeEnemiesWeakToChopDamagePlugin.VERSION}: {(message != null ? message.ToString() : "null")}");
-        }
-
-        private static void LogChop(DamageModifiers mod, string infix, bool isGreyDwarf)
-        {
-            if (isGreyDwarf && !LogGreydwarfEnemyResistanceChanges.Value)
-            {
-                return;
-            }
-
-            if (!isGreyDwarf && !LogNonGreydwarfEnemyResistanceChanges.Value)
-            {
-                return;
-            }
-
-            Log($"Wooden enemy {infix} Chop: {mod.m_chop}, Lightning {mod.m_lightning}");
-        }
-
         private static readonly HashSet<string> vanillaGreydwarves = new HashSet<string>() { "Greyling", "Greydwarf", "Greydwarf_Elite", "Greydwarf_Shaman" };
 
         private static readonly HashSet<string> moddedGreydwarves = new HashSet<string>() { "RRR_GDThornweaver", "Bitterstump_DoD" };
@@ -59,11 +38,13 @@ namespace TreeEnemiesWeakToChopDamage
         {
             internal DamageModifier chopChange;
             internal DamageModifier lightningChange;
+            internal bool slashChange;
 
-            public ResistanceChanges(WeaknessLevel chopChange, ResistanceLevel lightningChange)
+            public ResistanceChanges(WeaknessLevel chopChange, ResistanceLevel lightningChange, bool slashChange)
             {
                 this.chopChange = (DamageModifier)chopChange;
                 this.lightningChange = (DamageModifier)lightningChange;
+                this.slashChange = slashChange;
             }
         }
 
@@ -73,29 +54,29 @@ namespace TreeEnemiesWeakToChopDamage
 
             if (name == "GDKing" || name == "TentaRoot")
             {
-                return new ResistanceChanges(TheElderChopWeakness.Value, TheElderLightningResistance.Value);
+                return new ResistanceChanges(TheElderChopWeakness.Value, TheElderLightningResistance.Value, IncreaseTheElderSlashResistanceByOne.Value);
             }
 
             if (name == "Abomination")
             {
-                return new ResistanceChanges(AbominationChopWeakness.Value, AbominationLightningResistance.Value);
+                return new ResistanceChanges(AbominationChopWeakness.Value, AbominationLightningResistance.Value, IncreaseAbominationSlashResistanceByOne.Value);
             }
 
             if (IsVanillaGreydwarf(name))
             {
                 isGreyDwarf = true;
-                return new ResistanceChanges(VanillaGreydwarfChopWeakness.Value, VanillaGreydwarfLightningResistance.Value);
+                return new ResistanceChanges(VanillaGreydwarfChopWeakness.Value, VanillaGreydwarfLightningResistance.Value, IncreaseVanillaGreydwarfSlashResistanceByOne.Value);
             }
 
             if (IsModdedGreydwarf(name))
             {
                 isGreyDwarf = true;
-                return new ResistanceChanges(ModdedGreydwarfChopWeakness.Value, ModdedGreydwarfLightningResistance.Value);
+                return new ResistanceChanges(ModdedGreydwarfChopWeakness.Value, ModdedGreydwarfLightningResistance.Value, IncreaseModdedGreydwarfSlashResistanceByOne.Value);
             }
 
             if (IsModdedTreeEnemy(name))
             {
-                return new ResistanceChanges(OtherModdedTreeEnemyChopWeakness.Value, OtherModdedTreeEnemyLightningResistance.Value);
+                return new ResistanceChanges(OtherModdedTreeEnemyChopWeakness.Value, OtherModdedTreeEnemyLightningResistance.Value, IncreaseOtherModdedTreeEnemySlashResistanceByOne.Value);
             }
 
             return null;
@@ -119,10 +100,46 @@ namespace TreeEnemiesWeakToChopDamage
             }
         }
 
+        private static void MaybeIncreaseSlashResistance(ref DamageModifiers modifiers, DamageModifier chopMod, bool shouldChangeSlashMod)
+        {
+            // skip if we weren't the ones to change it (some modded enemies have custom chop resistance)
+            if (modifiers.m_chop != chopMod)
+            {
+                return;
+            }
+
+            // skip if config doesn't want it
+            if (!shouldChangeSlashMod)
+            {
+                return;
+            }
+
+            // don't turn very resistant into immune/ ignore
+            switch (modifiers.m_slash)
+            {
+                case DamageModifier.Resistant:
+                    modifiers.m_slash = DamageModifier.VeryResistant;
+                    break;
+
+                case DamageModifier.Normal:
+                    modifiers.m_slash = DamageModifier.Resistant;
+                    break;
+
+                case DamageModifier.Weak:
+                    modifiers.m_slash = DamageModifier.Normal;
+                    break;
+
+                case DamageModifier.VeryWeak:
+                    modifiers.m_slash = DamageModifier.Weak;
+                    break;
+            }
+        }
+
         private static void ApplyResistanceChanges(ref DamageModifiers modifiers, ResistanceChanges resistanceChanges)
         {
             ApplyChopWeaknessIfIgnore(ref modifiers, resistanceChanges.chopChange);
             ApplyLightningWeaknessIfNeutral(ref modifiers, resistanceChanges.lightningChange);
+            MaybeIncreaseSlashResistance(ref modifiers, resistanceChanges.chopChange, resistanceChanges.slashChange);
         }
 
         [HarmonyPatch(typeof(Character), nameof(Character.Start)), HarmonyPostfix]
@@ -142,9 +159,9 @@ namespace TreeEnemiesWeakToChopDamage
                 return;
             }
 
-            LogChop(__instance.m_damageModifiers, $"{prefabName} before", isGreyDwarf);
+            Helper.LogChop(__instance.m_damageModifiers, $"{prefabName} before", isGreyDwarf);
             ApplyResistanceChanges(ref __instance.m_damageModifiers, resistanceChanges.Value);
-            LogChop(__instance.m_damageModifiers, $"{prefabName} after", isGreyDwarf);
+            Helper.LogChop(__instance.m_damageModifiers, $"{prefabName} after", isGreyDwarf);
 
             if (__instance.m_weakSpots == null)
             {

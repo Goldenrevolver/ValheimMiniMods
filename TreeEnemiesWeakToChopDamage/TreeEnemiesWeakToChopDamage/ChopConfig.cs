@@ -1,5 +1,6 @@
 ﻿using BepInEx.Configuration;
 using ServerSync;
+using static TreeEnemiesWeakToChopDamage.ServerSyncWrapper;
 
 namespace TreeEnemiesWeakToChopDamage
 {
@@ -19,20 +20,39 @@ namespace TreeEnemiesWeakToChopDamage
         public static ConfigEntry<ResistanceLevel> ModdedGreydwarfLightningResistance;
         public static ConfigEntry<ResistanceLevel> OtherModdedTreeEnemyLightningResistance;
 
+        public static ConfigEntry<bool> IncreaseTheElderSlashResistanceByOne;
+        public static ConfigEntry<bool> IncreaseAbominationSlashResistanceByOne;
+        public static ConfigEntry<bool> IncreaseVanillaGreydwarfSlashResistanceByOne;
+        public static ConfigEntry<bool> IncreaseModdedGreydwarfSlashResistanceByOne;
+        public static ConfigEntry<bool> IncreaseOtherModdedTreeEnemySlashResistanceByOne;
+
         public static ConfigEntry<bool> LogNonGreydwarfEnemyResistanceChanges;
         public static ConfigEntry<bool> LogGreydwarfEnemyResistanceChanges;
 
-        public static ConfigEntry<bool> UseServerSync;
+        public static ConfigEntry<SyncEnabled> UseServerSync;
         public static ConfigEntry<bool> AddChopDamageToAxeTooltip;
+        public static ConfigEntry<bool> PrioritiseChopDamageDisplayColor;
 
         // these default values are intentional to allow casting to HitData.DamageModifier
         public enum WeaknessLevel
         {
-            IgnoreDefault = 5,
-            Normal = 0,
-            Weak = 2,
-            VeryWeak = 6,
+            Percent0Default = 4,
+            Percent25 = 5,
+            Percent50 = 1,
+            Percent100 = 0,
+            Percent150 = 2,
+            Percent200 = 6,
         }
+
+        //public enum WeaknessLevel
+        //{
+        //    ImmuneDefault = 4,
+        //    VeryResistant = 5,
+        //    Resistant = 1,
+        //    Normal = 0,
+        //    Weak = 2,
+        //    VeryWeak = 6,
+        //}
 
         // these default values are intentional to allow casting to HitData.DamageModifier
         public enum ResistanceLevel
@@ -41,12 +61,6 @@ namespace TreeEnemiesWeakToChopDamage
             Resistant = 1,
             VeryResistant = 5,
             Immune = 4,
-        }
-
-        public enum GreydwarfCheck
-        {
-            OnlyBaseGame = 0,
-            TryToFindModded = 1,
         }
     }
 }
