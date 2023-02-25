@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static ObtainableBlueMushrooms.ObtainableBlueMushroomsPlugin;
 using static ObtainableBlueMushrooms.PatchObjectDB;
 
 namespace ObtainableBlueMushrooms
@@ -17,7 +18,7 @@ namespace ObtainableBlueMushrooms
 
             var piece = InitBlueMushroomPiece();
 
-            if (ObtainableBlueMushroomsPlugin.MushroomPlantingTool.Value == ObtainableBlueMushroomsPlugin.PlantingTool.Hammer)
+            if (MushroomConfig.MushroomPlantingTool.Value == MushroomConfig.PlantingTool.Hammer)
             {
                 if (!hammer.m_itemData.m_shared.m_buildPieces.m_pieces.Contains(piece.gameObject))
                 {
@@ -94,54 +95,63 @@ namespace ObtainableBlueMushrooms
     {
         private static void Postfix(Player __instance, GameObject ___m_placementGhost)
         {
+            if (!AllowCavePlantingChanges())
+            {
+                return;
+            }
+
             if (___m_placementGhost == null)
             {
                 return;
             }
 
-            if (___m_placementGhost.name == pickableBlueMushroomPrefabName)
+            if (___m_placementGhost.name != pickableBlueMushroomPrefabName)
             {
-                // disable the building piece marker, that usually gets disabled by Piece.m_groundOnly or Piece.m_cultivatedGroundOnly
-                __instance.m_placementMarkerInstance.SetActive(false);
+                return;
+            }
 
-                // we already have a reason to fail (like the biome), return
-                if (__instance.m_placementStatus != 0)
+            // disable the building piece marker, that usually gets disabled by Piece.m_groundOnly or Piece.m_cultivatedGroundOnly
+            __instance.m_placementMarkerInstance.SetActive(false);
+
+            // we already have a reason to fail (like the biome), return
+            if (__instance.m_placementStatus != 0)
+            {
+                return;
+            }
+
+            // override successful placement status if we are not in a frost cave (biome is already checked)
+            if (!__instance.InInterior() && !EnvMan.instance.CheckInteriorBuildingOverride())
+            {
+                __instance.m_placementStatus = Player.PlacementStatus.WrongBiome;
+                __instance.SetPlacementGhostValid(false);
+                return;
+            }
+
+            Piece piece = __instance.m_placementGhost.GetComponent<Piece>();
+
+            // check if there are already other blue mushrooms nearby (we can't use m_blockingPieces because that only checks the 'piece' layer, which the mushrooms are not on)
+            if (!__instance.PieceRayTest(out Vector3 vector, out _, out _, out _, out _, false))
+            {
+                return;
+            }
+
+            Collider[] collidersInBlockRadius = Physics.OverlapSphere(vector, piece.m_blockRadius, PlantableBlueMushroom.pieceNonSolidLayerMask);
+
+            for (int i = 0; i < collidersInBlockRadius.Length; i++)
+            {
+                Piece componentInParent = collidersInBlockRadius[i].gameObject.GetComponentInParent<Piece>();
+
+                if (componentInParent == null || componentInParent == piece)
                 {
-                    return;
+                    continue;
                 }
 
-                // override successful placement status if we are not in a frost cave (biome is already checked)
-                if (!__instance.InInterior() && !EnvMan.instance.CheckInteriorBuildingOverride())
+                // is also blue mushroom
+                if (componentInParent.m_name == piece.m_name)
                 {
-                    __instance.m_placementStatus = Player.PlacementStatus.WrongBiome;
+                    __instance.m_placementStatus = Player.PlacementStatus.MoreSpace;
                     __instance.SetPlacementGhostValid(false);
                     return;
-                }
-
-                Piece piece = __instance.m_placementGhost.GetComponent<Piece>();
-
-                // check if there are already other blue mushrooms nearby (we can't use m_blockingPieces because that only checks the 'piece' layer, which the mushrooms are not on)
-                if (__instance.PieceRayTest(out Vector3 vector, out _, out _, out _, out _, false))
-                {
-                    Collider[] array = Physics.OverlapSphere(vector, piece.m_blockRadius, PlantableBlueMushroom.pieceNonSolidLayerMask);
-
-                    for (int i = 0; i < array.Length; i++)
-                    {
-                        Piece componentInParent = array[i].gameObject.GetComponentInParent<Piece>();
-
-                        if (componentInParent == null || componentInParent == piece)
-                        {
-                            continue;
-                        }
-
-                        // is also blue mushroom
-                        if (componentInParent.m_name == piece.m_name)
-                        {
-                            __instance.m_placementStatus = Player.PlacementStatus.MoreSpace;
-                            __instance.SetPlacementGhostValid(false);
-                            return;
-                        }
-                    }
                 }
             }
         }

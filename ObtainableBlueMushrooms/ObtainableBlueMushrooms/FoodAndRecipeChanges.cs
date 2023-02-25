@@ -1,4 +1,4 @@
-﻿using static ObtainableBlueMushrooms.ObtainableBlueMushroomsPlugin;
+﻿using static ObtainableBlueMushrooms.MushroomConfig;
 using static ObtainableBlueMushrooms.PatchObjectDB;
 
 namespace ObtainableBlueMushrooms

@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 using System.Collections.Generic;
-using static ObtainableBlueMushrooms.ObtainableBlueMushroomsPlugin;
+using static ObtainableBlueMushrooms.MushroomConfig;
 
 namespace ObtainableBlueMushrooms
 {
@@ -33,7 +33,7 @@ namespace ObtainableBlueMushrooms
             var mushroomDrop = new CharacterDrop.Drop()
             {
                 m_prefab = PatchObjectDB.blueMushroomItemDrop.gameObject,
-                m_chance = BatMushroomDropChance.Value,
+                m_chance = UnityEngine.Mathf.Clamp01(BatMushroomDropChance.Value),
                 m_amountMin = 1,
                 m_amountMax = 1,
                 m_onePerPlayer = false,
@@ -51,28 +51,33 @@ namespace ObtainableBlueMushrooms
                     return;
                 }
 
-                for (int i = 0; i < __instance.m_drops.Count; i++)
+                ReplaceLeatherDrop(__instance, mushroomDrop);
+            }
+        }
+
+        private static void ReplaceLeatherDrop(CharacterDrop characterDrops, CharacterDrop.Drop newDrop)
+        {
+            for (int i = 0; i < characterDrops.m_drops.Count; i++)
+            {
+                CharacterDrop.Drop item = characterDrops.m_drops[i];
+
+                // pulled into individual if statements because ?. is unreliable on monobehaviors, and other mods may have changed this loot
+
+                if (item?.m_prefab == null)
                 {
-                    CharacterDrop.Drop item = __instance.m_drops[i];
+                    continue;
+                }
 
-                    // pulled into individual if statements because ?. is unreliable on monobehaviors, and other mods may have changed this loot
+                var drop = item.m_prefab.GetComponent<ItemDrop>();
 
-                    if (item?.m_prefab == null)
-                    {
-                        continue;
-                    }
+                if (drop == null)
+                {
+                    continue;
+                }
 
-                    var drop = item.m_prefab.GetComponent<ItemDrop>();
-
-                    if (drop == null)
-                    {
-                        continue;
-                    }
-
-                    if (drop.m_itemData?.m_shared?.m_name == "$item_leatherscraps")
-                    {
-                        __instance.m_drops[i] = mushroomDrop;
-                    }
+                if (drop.m_itemData?.m_shared?.m_name == "$item_leatherscraps")
+                {
+                    characterDrops.m_drops[i] = newDrop;
                 }
             }
         }

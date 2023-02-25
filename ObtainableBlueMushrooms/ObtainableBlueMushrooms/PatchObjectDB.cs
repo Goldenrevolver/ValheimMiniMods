@@ -47,7 +47,7 @@ namespace ObtainableBlueMushrooms
 
             blueMushroomItemDrop = __instance.GetItemPrefab(blueMushroomItemDropName).GetComponent<ItemDrop>();
 
-            if (EnablePlantingInCaves.Value && !HasPlugin("advize.PlantEverything"))
+            if (AllowCavePlantingChanges())
             {
                 PlantableBlueMushroom.InitPieceAndAddToBuildPieces();
             }
