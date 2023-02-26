@@ -1,35 +1,19 @@
-﻿using HarmonyLib;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace SortedMenus
 {
-    [HarmonyPatch]
-    internal class CookingMenuPatches
+    internal class CookingMenuSorting
     {
         internal static readonly Dictionary<string, ItemDrop.ItemData> cookingStationAndOvenRecipes = new Dictionary<string, ItemDrop.ItemData>();
 
-        [HarmonyPriority(Priority.VeryLow)]
-        [HarmonyPatch(typeof(InventoryGui), nameof(InventoryGui.UpdateRecipeList)), HarmonyPrefix]
-        private static void UpdateRecipeList(InventoryGui __instance, ref List<Recipe> recipes)
+        internal static void UpdateRecipeList(ref List<Recipe> recipes, string stationName, bool isInCraftTab)
         {
-            if (!Player.m_localPlayer)
-            {
-                return;
-            }
-
             if (SortConfig.CookingMenuSorting.Value == SortCookingMenu.Disabled)
             {
                 return;
             }
 
-            if (!__instance.InCraftTab())
-            {
-                return;
-            }
-
-            CraftingStation currentCraftingStation = Player.m_localPlayer.GetCurrentCraftingStation();
-
-            if (!currentCraftingStation || currentCraftingStation.m_name != "$piece_cauldron")
+            if (!isInCraftTab)
             {
                 return;
             }
@@ -37,7 +21,12 @@ namespace SortedMenus
             var sw = new System.Diagnostics.Stopwatch();
             sw.Start();
 
-            if (!SortedRecipeCaches.TryReapplySorting(ref recipes, SortedRecipeCaches.cachedSortedCauldronRecipes))
+            // modded cooking pots don't get caching
+            if (stationName != "piece_cauldron")
+            {
+                recipes.Sort((recipeA, recipeB) => recipeA.CompareRecipeTo(recipeB, CraftingStationType.CookingPot));
+            }
+            else if (!SortedRecipeCaches.TryReapplySorting(ref recipes, SortedRecipeCaches.cachedSortedCauldronRecipes))
             {
                 UpdateCookingStationAndOvenRecipeList();
 

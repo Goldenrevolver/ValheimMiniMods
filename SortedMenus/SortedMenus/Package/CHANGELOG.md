@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.2
+- Custom cooking stations from 'BoneAppetit' are now sorted as cooking menus rather than crafting menus
+## 1.2.1
+- Hotfix: Fixed caching breaking some crafting stations due to missing null check
 ## 1.2.0
 - Performance: Sort order is now saved (cached) until you learn a new recipe or change config settings
 - Improved sorting order for items that grant eitr and added config settings for them

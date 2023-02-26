@@ -20,7 +20,7 @@
 
         private static bool IsOrCanBeEdible(ref ItemDrop.ItemData item)
         {
-            if (SortConfig.CheckIfItemIsInputForOvenOrCookingStation.Value && CookingMenuPatches.cookingStationAndOvenRecipes.TryGetValue(item.m_shared.m_name, out ItemDrop.ItemData cookingStationOutput))
+            if (SortConfig.CheckIfItemIsInputForOvenOrCookingStation.Value && CookingMenuSorting.cookingStationAndOvenRecipes.TryGetValue(item.m_shared.m_name, out ItemDrop.ItemData cookingStationOutput))
             {
                 item = cookingStationOutput;
             }

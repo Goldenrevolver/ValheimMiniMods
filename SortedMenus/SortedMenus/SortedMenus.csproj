@@ -48,6 +48,9 @@
     <Reference Include="assembly_guiutils">
       <HintPath>$(GameDir)\valheim_Data\Managed\publicized_assemblies\assembly_guiutils_publicized.dll</HintPath>
     </Reference>
+    <Reference Include="assembly_utils">
+      <HintPath>$(GameDir)\valheim_Data\Managed\publicized_assemblies\assembly_utils_publicized.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>$(GameDir)\unstripped_corlib\UnityEngine.dll</HintPath>
     </Reference>
@@ -71,10 +74,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\ConfigurationManagerAttributes.cs" />
+    <Compile Include="InventoryGuiPatch.cs" />
     <Compile Include="CraftingMenu\SortOverwriting\OverwritePatches.cs" />
-    <Compile Include="CookingMenu\CookingMenuPatches.cs" />
+    <Compile Include="CookingMenu\CookingMenuSorting.cs" />
     <Compile Include="CraftingMenu\SortOverwriting\ItemSortOverrider.cs" />
-    <Compile Include="CraftingMenu\CraftingMenuPatches.cs" />
+    <Compile Include="CraftingMenu\CraftingMenuSorting.cs" />
     <Compile Include="CookingMenu\FoodItemExtension.cs" />
     <Compile Include="CraftingMenu\SortOverwriting\CustomItemSortExtension.cs" />
     <Compile Include="GenericItemExtension.cs" />

@@ -9,7 +9,7 @@ namespace SortedMenus
     public class SortedMenusPlugin : BaseUnityPlugin
     {
         public const string NAME = "Sorted Cooking, Crafting and Skills Menu";
-        public const string VERSION = "1.2.1";
+        public const string VERSION = "1.2.2";
 
         private const string combineSkillsMod = "goldenrevolver.CombineSpearAndPolearmSkills";
         private const string augaMod = "randyknapp.mods.auga";
@@ -34,6 +34,22 @@ namespace SortedMenus
         internal static bool HasAugaInstalled()
         {
             return Chainloader.PluginInfos.ContainsKey(augaMod);
+        }
+
+        internal static bool IsCauldronLike(string prefabName)
+        {
+            switch (prefabName)
+            {
+                case "piece_cauldron":
+                // these are from 'BoneAppetit'
+                case "rk_grill":
+                case "rk_griddle":
+                case "rk_prep":
+                    return true;
+
+                default:
+                    return false;
+            }
         }
     }
 
