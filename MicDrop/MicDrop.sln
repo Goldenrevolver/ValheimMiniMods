@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicDrop", "MicDrop\MicDrop.csproj", "{C15B15BA-BAC9-4310-BE81-E6FCE034AFB5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C15B15BA-BAC9-4310-BE81-E6FCE034AFB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C15B15BA-BAC9-4310-BE81-E6FCE034AFB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C15B15BA-BAC9-4310-BE81-E6FCE034AFB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C15B15BA-BAC9-4310-BE81-E6FCE034AFB5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {11FAE59B-2B9F-486F-A85C-836DD45E9B72}
+	EndGlobalSection
+EndGlobal
