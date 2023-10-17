@@ -9,7 +9,7 @@ namespace SimpleSetAndCapeBonuses
     public class SimpleSetAndCapeBonusesPlugin : BaseUnityPlugin
     {
         public const string NAME = "Simple New Set and Cape Bonuses";
-        public const string VERSION = "1.0.1";
+        public const string VERSION = "1.0.2";
 
         public static ConfigEntry<bool> EnableLeatherArmorSetBonus;
         public static ConfigEntry<bool> EnableForagerArmorSetBonus;
