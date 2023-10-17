@@ -14,7 +14,7 @@ namespace CapeAndTorchResistanceChanges
     public class CapeAndTorchResistanceChangesPlugin : BaseUnityPlugin
     {
         public const string NAME = "Cape and Torch Resistance Changes - Water and Cold Resistance";
-        public const string VERSION = "1.0.1";
+        public const string VERSION = "1.0.3";
 
         public static ConfigEntry<CapeChanges> EnableCapeChanges;
         public static ConfigEntry<TorchChanges> EnableTorchChanges;
@@ -78,7 +78,7 @@ namespace CapeAndTorchResistanceChanges
             EnableTorchChanges = Config.Bind(sectionName, nameof(EnableTorchChanges), TorchChanges.ResistanceChangesAndDurability, string.Empty);
 
             EnableTrollArmorSetBonusChange = Config.Bind(sectionName, nameof(EnableTrollArmorSetBonusChange), true, string.Empty);
-            TrollCapeWaterResistance = Config.Bind(sectionName, nameof(TrollCapeWaterResistance), WaterResistance.Resistant, string.Empty);
+            TrollCapeWaterResistance = Config.Bind(sectionName, nameof(TrollCapeWaterResistance), WaterResistance.ImmuneExceptSwimming, string.Empty);
             LoxCapeColdResistance = Config.Bind(sectionName, nameof(LoxCapeColdResistance), ColdResistance.Immune, string.Empty);
 
             sectionName = "9 - Localization";

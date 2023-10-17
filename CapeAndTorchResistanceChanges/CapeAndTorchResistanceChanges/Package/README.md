@@ -27,7 +27,7 @@ Deer hide cape:
 
 Troll hide cape:
 - 5% increased movement speed
-- resistant to wet debuff
+- very resistant to wet debuff (immune to rain)
 - additionally it's no longer a part of the troll armor set, making it a 3 piece set
 
 Linen cape:

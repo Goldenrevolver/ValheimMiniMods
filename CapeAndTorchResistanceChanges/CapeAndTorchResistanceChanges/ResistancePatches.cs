@@ -17,14 +17,16 @@ namespace CapeAndTorchResistanceChanges
             Cold = 2048
         }
 
-        [HarmonyPatch(typeof(SEMan), nameof(SEMan.AddStatusEffect), new Type[] { typeof(string), typeof(bool), typeof(int), typeof(float) })]
+        [HarmonyPatch(typeof(SEMan), nameof(SEMan.AddStatusEffect), new Type[] { typeof(int), typeof(bool), typeof(int), typeof(float) })]
         private static class SEMan_AddStatusEffectByName_Patch
         {
-            private static bool Prefix(SEMan __instance, string name, bool resetTime, ref StatusEffect __result)
+            private static bool Prefix(SEMan __instance, int nameHash, bool resetTime, ref StatusEffect __result)
             {
                 // non resets will get handled by the other overload of the method
                 // this is just so being wet from swimming cannot be refreshed by rain while being very resistant to water
-                if (!resetTime || CanAddStatusEffectOverride(name, __instance.m_character))
+                var status = ObjectDB.instance.GetStatusEffect(nameHash);
+
+                if (status == null || !resetTime || CanAddStatusEffectOverride(status.name, __instance.m_character))
                 {
                     return true;
                 }
@@ -88,26 +90,6 @@ namespace CapeAndTorchResistanceChanges
                 {
                     return false;
                 }
-
-                //bool isBurning = __instance.HaveStatusEffect("Burning");
-                //bool isInWarmCozyArea = EffectArea.IsPointInsideArea(player.transform.position, EffectArea.Type.WarmCozyArea, 1f);
-
-                //if (isBurning || isInWarmCozyArea)
-                //{
-                //    return false;
-                //}
-
-                //// the immune and ignore check is hidden in here
-                //if (IsAtLeastResistant(coldModifier))
-                //{
-                //    bool isWet = __instance.HaveStatusEffect("Wet");
-                //    bool cannotGetFreezing = coldModifier != DamageModifier.Resistant && (coldModifier != DamageModifier.VeryResistant || !isWet);
-
-                //    if (name == "Cold" || cannotGetFreezing)
-                //    {
-                //        return false;
-                //    }
-                //}
             }
 
             return true;
@@ -169,7 +151,7 @@ namespace CapeAndTorchResistanceChanges
                 if (isEnvWet && !__instance.m_underRoof)
                 {
                     // this can fail due to resistances
-                    __instance.m_seman.AddStatusEffect("Wet", true);
+                    __instance.m_seman.AddStatusEffect(Player.s_statusEffectWet, true);
                 }
 
                 bool isWet = __instance.m_seman.HaveStatusEffect("Wet");
@@ -196,47 +178,47 @@ namespace CapeAndTorchResistanceChanges
 
                 if (isInShelter)
                 {
-                    __instance.m_seman.AddStatusEffect("Shelter", false);
+                    __instance.m_seman.AddStatusEffect(Player.s_statusEffectShelter, false);
                 }
                 else
                 {
-                    __instance.m_seman.RemoveStatusEffect("Shelter", false);
+                    __instance.m_seman.RemoveStatusEffect(Player.s_statusEffectShelter, false);
                 }
 
                 if (isNearCampfire)
                 {
-                    __instance.m_seman.AddStatusEffect("CampFire", false);
+                    __instance.m_seman.AddStatusEffect(Player.s_statusEffectCampFire, false);
                 }
                 else
                 {
-                    __instance.m_seman.RemoveStatusEffect("CampFire", false);
+                    __instance.m_seman.RemoveStatusEffect(Player.s_statusEffectCampFire, false);
                 }
 
                 bool restedConditions = !isSensed && (isSitting || isInShelter) && !shouldGetCold && !shouldGetFreezing && (!isWet || isInWarmCozyArea) && !isBurning && isNearCampfire;
 
                 if (restedConditions)
                 {
-                    __instance.m_seman.AddStatusEffect("Resting", false);
+                    __instance.m_seman.AddStatusEffect(Player.s_statusEffectResting, false);
                 }
                 else
                 {
-                    __instance.m_seman.RemoveStatusEffect("Resting", false);
+                    __instance.m_seman.RemoveStatusEffect(Player.s_statusEffectResting, false);
                 }
 
                 __instance.m_safeInHome = (restedConditions && isInShelter && (float)__instance.GetBaseValue() >= 1f);
 
                 if (shouldGetFreezing)
                 {
-                    if (!__instance.m_seman.RemoveStatusEffect("Cold", true))
+                    if (!__instance.m_seman.RemoveStatusEffect(Player.s_statusEffectCold, true))
                     {
-                        __instance.m_seman.AddStatusEffect("Freezing", false);
+                        __instance.m_seman.AddStatusEffect(Player.s_statusEffectFreezing, false);
 
                         return false;
                     }
                 }
                 else if (shouldGetCold)
                 {
-                    if (!__instance.m_seman.RemoveStatusEffect("Freezing", true) && __instance.m_seman.AddStatusEffect("Cold", false))
+                    if (!__instance.m_seman.RemoveStatusEffect(Player.s_statusEffectFreezing, true) && __instance.m_seman.AddStatusEffect(Player.s_statusEffectCold, false))
                     {
                         __instance.ShowTutorial("cold", false);
 
@@ -245,8 +227,8 @@ namespace CapeAndTorchResistanceChanges
                 }
                 else
                 {
-                    __instance.m_seman.RemoveStatusEffect("Cold", false);
-                    __instance.m_seman.RemoveStatusEffect("Freezing", false);
+                    __instance.m_seman.RemoveStatusEffect(Player.s_statusEffectCold, false);
+                    __instance.m_seman.RemoveStatusEffect(Player.s_statusEffectFreezing, false);
                 }
 
                 return false;

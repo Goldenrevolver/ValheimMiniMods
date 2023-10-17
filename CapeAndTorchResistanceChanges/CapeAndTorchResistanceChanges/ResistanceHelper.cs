@@ -24,7 +24,7 @@ namespace CapeAndTorchResistanceChanges
         {
             DamageModPair modPair = new DamageModPair();
 
-            foreach (var equipedItem in player.m_inventory.GetEquipedtems())
+            foreach (var equipedItem in player.m_inventory.GetEquippedItems())
             {
                 foreach (var newMod in equipedItem.m_shared.m_damageModifiers)
                 {
