@@ -8,29 +8,30 @@ namespace BetterElderBuff
     [HarmonyPatch(typeof(Localization))]
     internal static class PatchLocalization
     {
-        [HarmonyPatch(nameof(Localization.Translate))]
-        [HarmonyPostfix]
+        [HarmonyPatch(nameof(Localization.Translate)), HarmonyPostfix]
         public static void Translate_Postfix(Localization __instance, string word, ref string __result)
         {
-            if (word == PatchObjectDB.elderPowerTooltip)
+            if (word != PatchObjectDB.elderPowerTooltip)
             {
-                StringBuilder stringBuilder = new StringBuilder(256);
-
-                stringBuilder.AppendFormat(BetterElderBuffPlugin.Tooltip.Value + '\n');
-                stringBuilder.AppendFormat($"{__instance.Translate("inventory_chop")}: <color=orange>{(BetterElderBuffPlugin.DamageModifier.Value - 1) * 100f:+0;-0}%</color>\n");
-
-                if (BetterElderBuffPlugin.GivePickaxeDamage.Value)
-                {
-                    stringBuilder.AppendFormat($"{__instance.Translate("inventory_pickaxe")}: <color=orange>{(BetterElderBuffPlugin.DamageModifier.Value - 1) * 100f:+0;-0}%</color>\n");
-                }
-
-                if (BetterElderBuffPlugin.MaxCarryWeight.Value > 0)
-                {
-                    stringBuilder.AppendFormat($"{__instance.Translate("se_max_carryweight")}: <color=orange>{BetterElderBuffPlugin.MaxCarryWeight.Value:+0;-0}</color>\n");
-                }
-
-                __result = stringBuilder.ToString();
+                return;
             }
+
+            StringBuilder stringBuilder = new StringBuilder(256);
+
+            stringBuilder.AppendFormat(BetterElderBuffPlugin.Tooltip.Value + '\n');
+            stringBuilder.AppendFormat($"{__instance.Translate("inventory_chop")}: <color=orange>{(BetterElderBuffPlugin.DamageModifier.Value - 1) * 100f:+0;-0}%</color>\n");
+
+            if (BetterElderBuffPlugin.GivePickaxeDamage.Value)
+            {
+                stringBuilder.AppendFormat($"{__instance.Translate("inventory_pickaxe")}: <color=orange>{(BetterElderBuffPlugin.DamageModifier.Value - 1) * 100f:+0;-0}%</color>\n");
+            }
+
+            if (BetterElderBuffPlugin.BonusCarryingCapacity.Value > 0)
+            {
+                stringBuilder.AppendFormat($"{__instance.Translate("se_max_carryweight")}: <color=orange>{BetterElderBuffPlugin.BonusCarryingCapacity.Value:+0;-0}</color>\n");
+            }
+
+            __result = stringBuilder.ToString();
         }
     }
 
@@ -40,9 +41,8 @@ namespace BetterElderBuff
         internal const string elderPowerName = "GP_TheElder";
         internal const string elderPowerTooltip = "se_theelder_tooltip";
 
-        [HarmonyPatch(nameof(ObjectDB.Awake))]
-        [HarmonyPrefix]
-        public static void Show_Postfix(ObjectDB __instance)
+        [HarmonyPatch(nameof(ObjectDB.Awake)), HarmonyPostfix]
+        public static void Awake_Postfix(ObjectDB __instance)
         {
             if (SceneManager.GetActiveScene().name != "main")
             {
@@ -55,37 +55,40 @@ namespace BetterElderBuff
             {
                 StatusEffect item = __instance.m_StatusEffects[i];
 
-                if (item.name == elderPowerName)
+                if (item.name != elderPowerName)
                 {
-                    BetterElderBuff betterElder = ScriptableObject.CreateInstance<BetterElderBuff>();
-                    found = true;
-
-                    try
-                    {
-                        foreach (var field in typeof(SE_Stats).GetFields())
-                        {
-                            field.SetValue(betterElder, field.GetValue(item));
-                        }
-
-                        foreach (var field in typeof(StatusEffect).GetFields())
-                        {
-                            field.SetValue(betterElder, field.GetValue(item));
-                        }
-
-                        betterElder.name = item.name;
-
-                        betterElder.m_addMaxCarryWeight = BetterElderBuffPlugin.MaxCarryWeight.Value;
-                        betterElder.m_damageModifier = BetterElderBuffPlugin.DamageModifier.Value;
-
-                        __instance.m_StatusEffects[i] = betterElder;
-                    }
-                    catch (System.Exception)
-                    {
-                        Debug.LogError("Copying Elder buff failed, aborting.");
-                        __instance.m_StatusEffects[i] = item;
-                    }
-                    break;
+                    continue;
                 }
+
+                BetterElderBuff betterElder = ScriptableObject.CreateInstance<BetterElderBuff>();
+                found = true;
+
+                try
+                {
+                    foreach (var field in typeof(SE_Stats).GetFields())
+                    {
+                        field.SetValue(betterElder, field.GetValue(item));
+                    }
+
+                    foreach (var field in typeof(StatusEffect).GetFields())
+                    {
+                        field.SetValue(betterElder, field.GetValue(item));
+                    }
+
+                    betterElder.name = item.name;
+
+                    betterElder.m_addMaxCarryWeight = BetterElderBuffPlugin.BonusCarryingCapacity.Value;
+                    betterElder.m_damageModifier = BetterElderBuffPlugin.DamageModifier.Value;
+
+                    __instance.m_StatusEffects[i] = betterElder;
+                }
+                catch (System.Exception)
+                {
+                    Debug.LogError("Copying Elder buff failed, aborting.");
+                    __instance.m_StatusEffects[i] = item;
+                }
+
+                break;
             }
 
             if (!found)
@@ -105,6 +108,14 @@ namespace BetterElderBuff
             {
                 hitData.m_damage.Modify(this.m_damageModifier);
             }
+        }
+
+        public override void UpdateStatusEffect(float dt)
+        {
+            this.m_addMaxCarryWeight = BetterElderBuffPlugin.BonusCarryingCapacity.Value;
+            this.m_damageModifier = BetterElderBuffPlugin.DamageModifier.Value;
+
+            base.UpdateStatusEffect(dt);
         }
     }
 }
