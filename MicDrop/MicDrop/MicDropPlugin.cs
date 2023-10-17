@@ -13,7 +13,7 @@ namespace MicDrop
     public class MicDropPlugin : BaseUnityPlugin
     {
         public const string NAME = "Mic Drop - Drop Item Tweaks";
-        public const string VERSION = "1.0.0";
+        public const string VERSION = "1.0.1";
 
         internal static ConfigEntry<Toggle> StopMomentum;
         internal static ConfigEntry<DropHeight> DropPosition;

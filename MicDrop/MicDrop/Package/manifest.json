@@ -1,9 +1,9 @@
 {
   "name": "Mic_Drop_Drop_Item_Tweaks",
   "description": "Removes the forced throw when the player drops an item and changes the drop position based on configurable options",
-  "version_number": "1.0.0",
+  "version_number": "1.0.1",
   "website_url": "https://github.com/Goldenrevolver/ValheimMiniMods",
   "dependencies": [
-    "denikson-BepInExPack_Valheim-5.4.1901"
+    "denikson-BepInExPack_Valheim-5.4.2200"
   ]
 }
