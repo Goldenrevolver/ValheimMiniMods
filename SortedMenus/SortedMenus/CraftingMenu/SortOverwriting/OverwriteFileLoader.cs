@@ -22,6 +22,13 @@ namespace SortedMenus
         private const string external = "external";
         private const string embedded = "embedded";
 
+        private const string embeddedPathFormatNoLanguage = "SortedMenus.Overwrites.";
+
+        private const string craftingStationSortingOverwriteSuffix = "SortedMenus.CraftingStationSortingOverwrites.json";
+
+        private const string loadingStationLog = "Loading {0} crafting station sort overwrite file";
+        private const string failedStationLoadLog = "Failed loading {0} crafting station sort overwrite file";
+
         internal static void LoadOverwrites()
         {
             var nameOverwriteDict = LoadOverwriteFiles(nameOverwriteInfix);
@@ -38,6 +45,53 @@ namespace SortedMenus
             {
                 OverwritePatches.importedSortOverwrites = sortOverwriteDict;
             }
+
+            var stationOverwriteDict = LoadStationSortOverwriteFile();
+
+            if (stationOverwriteDict != null)
+            {
+                InventoryGuiPatch.craftingStationSortingOverwrites = stationOverwriteDict;
+            }
+        }
+
+        internal static Dictionary<string, string> LoadStationSortOverwriteFile()
+        {
+            var stationSortOverwriteFilesFound = Directory.GetFiles(Path.GetDirectoryName(Paths.PluginPath), craftingStationSortingOverwriteSuffix, SearchOption.AllDirectories);
+
+            foreach (var stationOverwriteFilePath in stationSortOverwriteFilesFound)
+            {
+                Helper.Log(string.Format(loadingStationLog, external));
+
+                var dict = LoadExternalOverwriteFile(stationOverwriteFilePath);
+
+                if (dict != null)
+                {
+                    return dict;
+                }
+                else
+                {
+                    Helper.LogWarning(string.Format(failedStationLoadLog, external));
+                }
+            }
+
+            // if we arrived here, then no external file successfully loaded
+
+            Helper.Log(string.Format(loadingStationLog, embedded));
+
+            var path = embeddedPathFormatNoLanguage + craftingStationSortingOverwriteSuffix;
+
+            var embeddedDict = LoadEmbeddedOverwriteFile(path);
+
+            if (embeddedDict != null)
+            {
+                return embeddedDict;
+            }
+            else
+            {
+                Helper.LogWarning(string.Format(failedStationLoadLog, embedded));
+            }
+
+            return null;
         }
 
         internal static Dictionary<string, string> LoadOverwriteFiles(string infix)
@@ -75,7 +129,9 @@ namespace SortedMenus
             {
                 Helper.Log(string.Format(loadingLog, embedded, infix, currentLanguage));
 
-                var dict = LoadEmbeddedOverwriteFile(infix, currentLanguage);
+                var path = string.Format(embeddedPathFormat, infix, currentLanguage);
+
+                var dict = LoadEmbeddedOverwriteFile(path);
 
                 if (dict != null)
                 {
@@ -129,9 +185,9 @@ namespace SortedMenus
             return ParseStringToDictionary(translationAsString);
         }
 
-        internal static Dictionary<string, string> LoadEmbeddedOverwriteFile(string infix, string language)
+        internal static Dictionary<string, string> LoadEmbeddedOverwriteFile(string path)
         {
-            string translationAsString = ReadEmbeddedTextFile(string.Format(embeddedPathFormat, infix, language));
+            string translationAsString = ReadEmbeddedTextFile(path);
 
             if (translationAsString == null)
             {

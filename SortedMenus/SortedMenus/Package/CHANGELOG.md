@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.2
+- Hotfix: Fixed custom crafting station support causing the cauldron to not get treated as a cooking station
+## 1.3.1
+- Hotfix: Fixed hand crafting not working due to missing null check
+## 1.3.0
+- Fixed compatibility with the pagination feature of AAA Crafting
+- Added config file to set whether a custom crafting station should be treated as a cooking or crafting station, or not get sorted at all
 ## 1.2.2
 - Custom cooking stations from 'BoneAppetit' are now sorted as cooking menus rather than crafting menus
 ## 1.2.1

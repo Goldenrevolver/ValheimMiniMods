@@ -6,7 +6,10 @@ namespace SortedMenus
     [HarmonyPatch]
     internal class InventoryGuiPatch
     {
-        [HarmonyPriority(Priority.VeryLow)]
+        internal static Dictionary<string, string> craftingStationSortingOverwrites = new Dictionary<string, string>();
+
+        // higher than normal due to AAA crafting paginator
+        [HarmonyPriority(Priority.HigherThanNormal)]
         [HarmonyPatch(typeof(InventoryGui), nameof(InventoryGui.UpdateRecipeList)), HarmonyPrefix]
         private static void UpdateRecipeList(InventoryGui __instance, ref List<Recipe> recipes)
         {
@@ -19,7 +22,23 @@ namespace SortedMenus
 
             string stationName = currentCraftingStation ? Utils.GetPrefabName(currentCraftingStation.gameObject) : null;
 
-            if (SortedMenusPlugin.IsCauldronLike(stationName))
+            if (stationName != null && craftingStationSortingOverwrites.TryGetValue(stationName, out string sortingType))
+            {
+                switch (sortingType.ToLower())
+                {
+                    case "ignored":
+                        return;
+
+                    case "cooking":
+                        CookingMenuSorting.UpdateRecipeList(ref recipes, stationName, __instance.InCraftTab());
+                        return;
+
+                    default:
+                        break;
+                }
+            }
+
+            if (stationName == "piece_cauldron")
             {
                 CookingMenuSorting.UpdateRecipeList(ref recipes, stationName, __instance.InCraftTab());
             }

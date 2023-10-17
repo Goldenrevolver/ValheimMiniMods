@@ -1,3 +1,6 @@
+# Name and Sort Overwrites
+
+
 First, get the internal name of your native language by visiting https://valheim-modding.github.io/Jotunn/data/localization/language-list.html and copying the respective name in the 'Folder Name' column.
 
 Then create two files called (or copy and rename the English one as a template):
@@ -23,4 +26,34 @@ Sort overwrites are applied after name overwrites, so you can rename an item and
 
 ## Done?
 
-Great, now simply throw those two files into the plugins folder (where the dll is) and my mod should find them. If you think your files would be great for others too, then consider sending them to me via a nexus forum personal message, so I can include it in the mod.
+Great, now simply throw those two files into the plugins folder (where the dll is) and my mod should find them.
+If you think your files would be useful for others too, please consider sending them to me via a discord or nexus forum personal message, so I can include it in the mod.
+
+
+# Crafting Station Sorting Overwrites
+
+
+This mod treats any custom crafting station as a normal crafting station by default.
+
+For any overwrites to this, this mod looks for a file called 'SortedMenus.SortedMenus.CraftingStationSortingOverwrites.json'. 
+
+In this file you can change it so this mod treats a station from a mod as a cooking station (the default file does this for the stations from the mod 'Bone Appetit').
+
+Alternatively, you could change it so this mod completely ignores a crafting station and not sort the recipes from that station at all.
+
+This file is a json file that use the internal prefab name of the crafting station on the left. For example the default cooking pot is called 'piece_cauldron'.
+
+These should NOT start with a leading $. These are prefab names, not translation keys!
+
+
+## Options
+
+For changing a crafting station to be considered as a cooking station, use the value "cooking" on the right.
+
+For changing a crafting station to be ignored and not sorted, use the value "ignored" on the right.
+
+
+## Done?
+
+Great, now simply throw this file into the plugins folder (where the dll is) and my mod should find it.
+If your file adds compatibiltiy for a public mod and would therefore be useful for others too, please consider sending it to me via a discord or nexus forum personal message, so I can include it in the mod.
