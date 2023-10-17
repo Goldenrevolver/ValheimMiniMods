@@ -21,8 +21,8 @@ namespace VegetarianTurnipSoup
     internal static class PatchObjectDB
     {
         [HarmonyPatch(nameof(ObjectDB.Awake))]
-        [HarmonyPrefix]
-        public static void Awake_Prefix(ObjectDB __instance)
+        [HarmonyPostfix]
+        public static void Awake_Postfix(ObjectDB __instance)
         {
             if (SceneManager.GetActiveScene().name != "main")
             {
