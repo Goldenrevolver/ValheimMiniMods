@@ -12,10 +12,10 @@ namespace ObtainableBlueMushrooms
         internal static GameObject pickableBlueMushroomPrefab;
 
         private const string cultivatorPrefabName = "Cultivator";
-        internal static GameObject cultivatorPrefab;
+        internal static ItemDrop cultivatorPrefab;
 
         private const string hammerPrefabName = "Hammer";
-        internal static GameObject hammerPrefab;
+        internal static ItemDrop hammerPrefab;
 
         private const string blueMushroomItemDropName = "MushroomBlue";
         internal static ItemDrop blueMushroomItemDrop;
@@ -34,14 +34,14 @@ namespace ObtainableBlueMushrooms
                     pickableBlueMushroomPrefab = (GameObject)gameObject;
                 }
 
-                if (gameObject.name == cultivatorPrefabName)
+                if (gameObject.name == cultivatorPrefabName && ((GameObject)gameObject).TryGetComponent(out ItemDrop cultivator))
                 {
-                    cultivatorPrefab = (GameObject)gameObject;
+                    cultivatorPrefab = cultivator;
                 }
 
-                if (gameObject.name == hammerPrefabName)
+                if (gameObject.name == hammerPrefabName && ((GameObject)gameObject).TryGetComponent(out ItemDrop hammer))
                 {
-                    hammerPrefab = (GameObject)gameObject;
+                    hammerPrefab = hammer;
                 }
             }
 

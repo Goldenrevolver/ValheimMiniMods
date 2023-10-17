@@ -9,7 +9,7 @@ namespace ObtainableBlueMushrooms
     public class ObtainableBlueMushroomsPlugin : BaseUnityPlugin
     {
         public const string NAME = "Immersively Obtainable Blue Mushrooms";
-        public const string VERSION = "1.0.2";
+        public const string VERSION = "1.0.3";
 
         internal const string plantEverything = "advize.PlantEverything";
 

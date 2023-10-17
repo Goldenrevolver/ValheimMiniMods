@@ -1,5 +1,7 @@
 # Changelog
 
+## 1.0.3
+- Updated for Valheim version 0.217.24
 ## 1.0.2
 - Fixed frost cave restriction still applying to blue mushrooms from 'Plant Everything'
 - Modernized ingame config display

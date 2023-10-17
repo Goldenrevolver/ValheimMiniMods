@@ -13,33 +13,30 @@ namespace ObtainableBlueMushrooms
 
         public static void InitPieceAndAddToBuildPieces()
         {
-            ItemDrop hammer = hammerPrefab.GetComponent<ItemDrop>();
-            ItemDrop cultivator = cultivatorPrefab.GetComponent<ItemDrop>();
-
-            var piece = InitBlueMushroomPiece();
+            Piece piece = InitBlueMushroomPiece();
 
             if (MushroomConfig.MushroomPlantingTool.Value == MushroomConfig.PlantingTool.Hammer)
             {
-                if (!hammer.m_itemData.m_shared.m_buildPieces.m_pieces.Contains(piece.gameObject))
+                if (!hammerPrefab.m_itemData.m_shared.m_buildPieces.m_pieces.Contains(piece.gameObject))
                 {
-                    hammer.m_itemData.m_shared.m_buildPieces.m_pieces.Add(piece.gameObject);
+                    hammerPrefab.m_itemData.m_shared.m_buildPieces.m_pieces.Add(piece.gameObject);
                 }
 
-                cultivator.m_itemData.m_shared.m_buildPieces.m_pieces.Remove(piece.gameObject);
+                cultivatorPrefab.m_itemData.m_shared.m_buildPieces.m_pieces.Remove(piece.gameObject);
             }
             else
             {
-                if (!cultivator.m_itemData.m_shared.m_buildPieces.m_pieces.Contains(piece.gameObject))
+                if (!cultivatorPrefab.m_itemData.m_shared.m_buildPieces.m_pieces.Contains(piece.gameObject))
                 {
-                    cultivator.m_itemData.m_shared.m_buildPieces.m_pieces.Add(piece.gameObject);
+                    cultivatorPrefab.m_itemData.m_shared.m_buildPieces.m_pieces.Add(piece.gameObject);
                 }
 
-                cultivator.m_itemData.m_shared.m_buildPieces.m_canRemovePieces = true;
+                cultivatorPrefab.m_itemData.m_shared.m_buildPieces.m_canRemovePieces = true;
 
-                hammer.m_itemData.m_shared.m_buildPieces.m_pieces.Remove(piece.gameObject);
+                hammerPrefab.m_itemData.m_shared.m_buildPieces.m_pieces.Remove(piece.gameObject);
             }
 
-            var onion = cultivator.m_itemData.m_shared.m_buildPieces.m_pieces.First((p) => p.name == "sapling_onion");
+            var onion = cultivatorPrefab.m_itemData.m_shared.m_buildPieces.m_pieces.First((p) => p.name == "sapling_onion");
 
             var sphereCollider = piece.GetComponentInChildren<SphereCollider>();
 
