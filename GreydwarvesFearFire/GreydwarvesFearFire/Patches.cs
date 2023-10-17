@@ -8,7 +8,7 @@ namespace GreydwarvesFearFire
         [HarmonyPatch(typeof(MonsterAI), nameof(MonsterAI.UpdateAI)), HarmonyPrefix]
         private static void PatchMonsterAIUpdate(MonsterAI __instance)
         {
-            if (GlobalVars.RequiresUpdate || FearFireConfig.RequireFireWeakness.Value == FireWeakness.CurrentlyWeakToFire)
+            if (GlobalVars.RequiresFearAIUpdate || FearFireConfig.RequireFireWeakness.Value == FireWeakness.CurrentlyWeakToFire)
             {
                 GlobalVars.WaitingForFirstCreatureUpdate = false;
                 FearCalculation.UpdateFearLevel(__instance);
@@ -26,7 +26,7 @@ namespace GreydwarvesFearFire
         {
             if (__instance.m_defeatSetGlobalKey == GlobalVars.defeatedElderKey)
             {
-                GlobalVars.RequiresUpdate = true;
+                GlobalVars.RequiresFearAIUpdate = true;
             }
         }
     }

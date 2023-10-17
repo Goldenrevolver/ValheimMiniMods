@@ -14,7 +14,12 @@ namespace GreydwarvesFearFire
     {
         public const string GUID = "goldenrevolver.GreydwarvesFearFire";
         public const string NAME = "Greydwarves Fear Fire";
-        public const string VERSION = "1.0.0";
+        public const string VERSION = "1.0.1";
+
+        // TODO all weapons that deal fire damage inflict fear
+        // TODO fire arrows?
+        // TODO player burning creates fear
+        // TODO enemy burning creates fear
 
         protected void Awake()
         {
@@ -31,29 +36,28 @@ namespace GreydwarvesFearFire
 
             var sectionName = "0 - General";
 
-            UseServerSync = Config.BindForceEnabledSyncLocker(serverSyncInstance, sectionName, nameof(UseServerSync));
-
             RequireFireWeakness = Config.BindSynced(serverSyncInstance, sectionName, nameof(RequireFireWeakness), FireWeakness.UsuallyWeakToFire, "'Currently weak to fire' requires checks every AI update, so it may lower frame rate on weak PCs or highly modded games.");
             RequireKillingTheElder = Config.BindSynced(serverSyncInstance, sectionName, nameof(RequireKillingTheElder), true);
+            UseServerSync = Config.BindForceEnabledSyncLocker(serverSyncInstance, sectionName, nameof(UseServerSync));
 
             sectionName = "1 - Base Game";
 
-            GreylingFearLevel = Config.BindSynced(serverSyncInstance, sectionName, nameof(GreylingFearLevel), FearLevel.Afraid);
+            GreydwarfBruteFearLevel = Config.BindSynced(serverSyncInstance, sectionName, nameof(GreydwarfBruteFearLevel), FearLevel.Afraid);
             GreydwarfFearLevel = Config.BindSynced(serverSyncInstance, sectionName, nameof(GreydwarfFearLevel), FearLevel.Afraid);
             GreydwarfShamanFearLevel = Config.BindSynced(serverSyncInstance, sectionName, nameof(GreydwarfShamanFearLevel), FearLevel.Afraid);
-            GreydwarfBruteFearLevel = Config.BindSynced(serverSyncInstance, sectionName, nameof(GreydwarfBruteFearLevel), FearLevel.Afraid);
+            GreylingFearLevel = Config.BindSynced(serverSyncInstance, sectionName, nameof(GreylingFearLevel), FearLevel.Afraid);
 
             sectionName = "2 - Modded";
 
-            ModdedGreydwarfFearLevel = Config.BindSynced(serverSyncInstance, sectionName, nameof(ModdedGreydwarfFearLevel), FearLevel.Afraid);
             ModdedBossGreydwarfFearLevel = Config.BindSynced(serverSyncInstance, sectionName, nameof(ModdedBossGreydwarfFearLevel), FearLevel.NoFear);
+            ModdedGreydwarfFearLevel = Config.BindSynced(serverSyncInstance, sectionName, nameof(ModdedGreydwarfFearLevel), FearLevel.Afraid);
 
             Config.SettingChanged += Config_SettingChanged;
         }
 
         private void Config_SettingChanged(object sender, SettingChangedEventArgs e)
         {
-            GlobalVars.RequiresUpdate = true;
+            GlobalVars.RequiresFearAIUpdate = true;
         }
     }
 
@@ -66,7 +70,7 @@ namespace GreydwarvesFearFire
 
         internal static bool WaitingForFirstCreatureUpdate { get; set; } = false;
 
-        internal static bool RequiresUpdate
+        internal static bool RequiresFearAIUpdate
         {
             get => _requiresUpdate;
             set
@@ -92,7 +96,7 @@ namespace GreydwarvesFearFire
 
             yield return new WaitForSeconds(1f);
 
-            RequiresUpdate = false;
+            RequiresFearAIUpdate = false;
             updateCoroutine = null;
 
             Log("Finished fear update");

@@ -83,24 +83,19 @@ namespace GreydwarvesFearFire
         {
             string name = Utils.GetPrefabName(monsterAI.gameObject);
 
-            if (name == "Greyling")
+            switch (name)
             {
-                return FearFireConfig.GreylingFearLevel.Value;
-            }
+                case "Greyling":
+                    return FearFireConfig.GreylingFearLevel.Value;
 
-            if (name == "Greydwarf")
-            {
-                return FearFireConfig.GreydwarfFearLevel.Value;
-            }
+                case "Greydwarf":
+                    return FearFireConfig.GreydwarfFearLevel.Value;
 
-            if (name == "Greydwarf_Shaman")
-            {
-                return FearFireConfig.GreydwarfShamanFearLevel.Value;
-            }
+                case "Greydwarf_Shaman":
+                    return FearFireConfig.GreydwarfShamanFearLevel.Value;
 
-            if (name == "Greydwarf_Elite")
-            {
-                return FearFireConfig.GreydwarfBruteFearLevel.Value;
+                case "Greydwarf_Elite":
+                    return FearFireConfig.GreydwarfBruteFearLevel.Value;
             }
 
             if (IsModdedGreydwarf(name))
