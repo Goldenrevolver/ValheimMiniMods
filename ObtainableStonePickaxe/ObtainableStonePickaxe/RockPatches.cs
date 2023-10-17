@@ -9,6 +9,16 @@ namespace ObtainableStonePickaxe
         // arbitrary negative number, so you cannot destroy anything other than the ground without patches to permit it
         internal const int stonePickaxeTier = -18;
 
+        [HarmonyPatch(typeof(ZLog), nameof(ZLog.LogWarning))]
+        internal static class PatchLog
+        {
+            // suppress the log spam they added
+            public static bool Prefix(object o)
+            {
+                return !(o is string s && s == "No stat for mine tier: " + stonePickaxeTier.ToString());
+            }
+        }
+
         [HarmonyPatch(typeof(Destructible), nameof(Destructible.RPC_Damage))]
         internal static class PatchDestructible
         {

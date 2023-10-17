@@ -9,7 +9,7 @@ namespace ObtainableStonePickaxe
     public class ObtainableStonePickaxePlugin : BaseUnityPlugin
     {
         public const string NAME = "Obtainable Stone Pickaxe";
-        public const string VERSION = "1.0.0";
+        public const string VERSION = "1.0.1";
 
         public static ConfigEntry<bool> ChangeStonePickaxeRecipe;
 
