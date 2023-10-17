@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogCleanup", "LogCleanup\LogCleanup.csproj", "{7DA20B5E-913B-4300-9A89-9D18BF867810}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7DA20B5E-913B-4300-9A89-9D18BF867810}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DA20B5E-913B-4300-9A89-9D18BF867810}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DA20B5E-913B-4300-9A89-9D18BF867810}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DA20B5E-913B-4300-9A89-9D18BF867810}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {538BCCD4-0E47-4915-BFF5-37EAD26BB2B8}
+	EndGlobalSection
+EndGlobal

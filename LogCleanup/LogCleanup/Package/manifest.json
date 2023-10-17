@@ -1,0 +1,9 @@
+{
+  "name": "Log_Cleanup",
+  "description": "Removes the 8 yellow warnings you get before the main menu. Not a single warning more or less, exactly those specific 8, that's it",
+  "version_number": "1.0.0",
+  "website_url": "https://github.com/Goldenrevolver/ValheimMiniMods",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2200"
+  ]
+}
