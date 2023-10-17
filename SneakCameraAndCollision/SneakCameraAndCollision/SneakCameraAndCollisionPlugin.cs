@@ -10,7 +10,7 @@ namespace SneakCameraAndCollision
     public class SneakCameraAndCollisionPlugin : BaseUnityPlugin
     {
         public const string NAME = "Sneak Camera and Collision Height";
-        public const string VERSION = "1.0.0";
+        public const string VERSION = "1.0.1";
 
         // maybe handle uncroaching (even if the value ranges and base game behavior already handle it quite well)
 

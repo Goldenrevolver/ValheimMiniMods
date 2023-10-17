@@ -1,9 +1,9 @@
 {
   "name": "Sneak_Camera_and_Collision_Height",
   "description": "Changes the height of the camera and the height of your character while sneaking",
-  "version_number": "1.0.0",
+  "version_number": "1.0.1",
   "website_url": "https://github.com/Goldenrevolver/ValheimMiniMods",
   "dependencies": [
-    "denikson-BepInExPack_Valheim-5.4.1901"
+    "denikson-BepInExPack_Valheim-5.4.2200"
   ]
 }
