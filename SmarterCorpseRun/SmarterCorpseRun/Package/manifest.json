@@ -1,9 +1,0 @@
-{
-  "name": "Smarter_Corpse_Run_And_Tombstone",
-  "description": "The corpse run buff and the tombstone will now calculate how much maximum carrying capacity you could have if you equipped the optimal items out of both inventories",
-  "version_number": "1.0.1",
-  "website_url": "https://github.com/Goldenrevolver/ValheimMiniMods",
-  "dependencies": [
-    "denikson-BepInExPack_Valheim-5.4.1901"
-  ]
-}

@@ -3,66 +3,8 @@ using System;
 using System.Collections.Generic;
 using static ItemDrop;
 
-namespace SmarterCorpseRun
+namespace SimpleSmarterCorpseRun
 {
-    internal class HumanoidPatches
-    {
-        [HarmonyPatch(typeof(Humanoid), nameof(Humanoid.EquipItem))]
-        public static class Equip_Patch
-        {
-            private static void Prefix(Humanoid __instance, ItemData item, bool __result, ref float __state)
-            {
-                if (!__result)
-                {
-                    return;
-                }
-
-                if (!(__instance is Player player) || player != Player.m_localPlayer)
-                {
-                    return;
-                }
-
-                __state = player.GetMaxCarryWeight();
-            }
-
-            private static void Postfix(Humanoid __instance, ItemData item, bool __result, ref float __state)
-            {
-                // if the item wasn't equipped, skip
-                if (!__result)
-                {
-                    return;
-                }
-
-                if (!(__instance is Player player) || player != Player.m_localPlayer)
-                {
-                    return;
-                }
-
-                if (__state == player.GetMaxCarryWeight())
-                {
-                    return;
-                }
-
-                SE_Stats oldCorpseRun = null;
-
-                // essentially SEMan.HaveStatusEffect but it returns the status effect
-                foreach (var statusEffect in player.m_seman.m_statusEffects)
-                {
-                    if (statusEffect.name == SmarterCorpseRunPlugin.CustomCorpseRun)
-                    {
-                        oldCorpseRun = statusEffect as SE_Stats;
-                        break;
-                    }
-                }
-
-                if (oldCorpseRun != null && player.m_seman.RemoveStatusEffect(SmarterCorpseRunPlugin.CustomCorpseRun, true))
-                {
-                    SmarterCorpseRunPlugin.GrantCustomCorpseRun(player, oldCorpseRun);
-                }
-            }
-        }
-    }
-
     internal class TombStonePatches
     {
         [HarmonyPatch(typeof(TombStone), nameof(TombStone.EasyFitInInventory))]
@@ -70,7 +12,7 @@ namespace SmarterCorpseRun
         {
             private static void Postfix(TombStone __instance, Player player, ref bool __result)
             {
-                if (!SmarterCorpseRunPlugin.EnableTombStoneChange.Value)
+                if (!SimpleSmarterCorpseRunPlugin.EnableSmartTombStoneWeightCheck.Value)
                 {
                     return;
                 }
@@ -94,7 +36,7 @@ namespace SmarterCorpseRun
                 combinedInventory.AddRange(tombStoneInventory.m_inventory);
                 combinedInventory.AddRange(playerInventory.m_inventory);
 
-                float potentialExtraCarryingCapacity = SmarterCorpseRunPlugin.CalculatePotentialExtraCarryingCapacity(combinedInventory, playerInventory.GetEquipedtems());
+                float potentialExtraCarryingCapacity = CorpseRunMath.CalculatePotentialExtraCarryingCapacity(combinedInventory, playerInventory.GetEquippedItems());
 
                 if (playerInventory.GetTotalWeight() + tombStoneInventory.GetTotalWeight() <= player.GetMaxCarryWeight() + potentialExtraCarryingCapacity)
                 {
@@ -107,13 +49,13 @@ namespace SmarterCorpseRun
         // the base game method from TombStone.EasyFitInInventory without the carryweight check at the end
         private static bool EasyFitInInventoryWithoutWeightCheck(TombStone __instance, Player player)
         {
-            int num = player.GetInventory().GetEmptySlots() - __instance.m_container.GetInventory().NrOfItems();
+            int num = player.m_inventory.GetEmptySlots() - __instance.m_container.m_inventory.NrOfItems();
 
             if (num < 0)
             {
-                foreach (ItemData itemData in __instance.m_container.GetInventory().GetAllItems())
+                foreach (ItemDrop.ItemData itemData in __instance.m_container.m_inventory.GetAllItems())
                 {
-                    if (player.GetInventory().FindFreeStackSpace(itemData.m_shared.m_name) >= itemData.m_stack)
+                    if (player.m_inventory.FindFreeStackSpace(itemData.m_shared.m_name, (float)itemData.m_worldLevel) >= itemData.m_stack)
                     {
                         num++;
                     }
@@ -133,7 +75,7 @@ namespace SmarterCorpseRun
         {
             private static void Postfix(TombStone __instance)
             {
-                if (!SmarterCorpseRunPlugin.EnableCorpseRunChange.Value)
+                if (!SimpleSmarterCorpseRunPlugin.EnableSmartCorpseRunBuff.Value)
                 {
                     return;
                 }
@@ -142,9 +84,9 @@ namespace SmarterCorpseRun
                 {
                     Player player = __instance.FindOwner();
 
-                    player.m_seman.RemoveStatusEffect(corpseRun.name, true);
+                    player.m_seman.RemoveStatusEffect(corpseRun, true);
 
-                    SmarterCorpseRunPlugin.GrantCustomCorpseRun(player, corpseRun);
+                    CorpseRunMath.AddCustomCorpseEffectRunToPlayer(player, corpseRun);
                 }
             }
         }
@@ -156,7 +98,7 @@ namespace SmarterCorpseRun
         [HarmonyPriority(Priority.HigherThanNormal)]
         private static void Prefix(ref Inventory __instance, ref Inventory fromInventory)
         {
-            if (!SmarterCorpseRunPlugin.EnableTombStoneChange.Value)
+            if (!SimpleSmarterCorpseRunPlugin.EnableSmartTombStoneSlotCheck.Value)
             {
                 return;
             }

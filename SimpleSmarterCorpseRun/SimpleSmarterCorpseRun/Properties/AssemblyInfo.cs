@@ -1,16 +1,16 @@
-﻿using SmarterCorpseRun;
+﻿using SimpleSmarterCorpseRun;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SmarterCorpseRun")]
+[assembly: AssemblyTitle("SimpleSmarterCorpseRun")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SmarterCorpseRun")]
-[assembly: AssemblyCopyright("Copyright ©  2022")]
+[assembly: AssemblyProduct("SimpleSmarterCorpseRun")]
+[assembly: AssemblyCopyright("Copyright ©  2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("e7049e29-0ea5-4028-af35-a9f5f095aaaf")]
+[assembly: Guid("0c1ed8a1-1696-42a5-ac35-94bd79cde917")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion(SmarterCorpseRunPlugin.VERSION + ".0")]
-[assembly: AssemblyFileVersion(SmarterCorpseRunPlugin.VERSION + ".0")]
+[assembly: AssemblyVersion(SimpleSmarterCorpseRunPlugin.VERSION + ".0")]
+[assembly: AssemblyFileVersion(SimpleSmarterCorpseRunPlugin.VERSION + ".0")]

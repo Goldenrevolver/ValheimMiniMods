@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E7049E29-0EA5-4028-AF35-A9F5F095AAAF}</ProjectGuid>
+    <ProjectGuid>{0C1ED8A1-1696-42A5-AC35-94BD79CDE917}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SmarterCorpseRun</RootNamespace>
-    <AssemblyName>SmarterCorpseRun</AssemblyName>
+    <RootNamespace>SimpleSmarterCorpseRun</RootNamespace>
+    <AssemblyName>SimpleSmarterCorpseRun</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -64,8 +64,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SmarterCorpseRunPlugin.cs" />
+    <Compile Include="CorpseRunMath.cs" />
+    <Compile Include="HumanoidPatches.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimpleSmarterCorpseRunPlugin.cs" />
     <Compile Include="TombstonePatches.cs" />
   </ItemGroup>
   <ItemGroup>
