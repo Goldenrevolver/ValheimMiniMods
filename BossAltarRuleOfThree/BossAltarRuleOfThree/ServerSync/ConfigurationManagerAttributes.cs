@@ -1,4 +1,7 @@
-﻿namespace BossAltarRuleOfThree
+﻿using BepInEx.Configuration;
+using UnityEngine;
+
+namespace BossAltarRuleOfThree
 {
     /// <summary>
     /// Class that specifies how a setting should be displayed inside the ConfigurationManager settings window.
@@ -30,6 +33,16 @@
 
     internal sealed class ConfigurationManagerAttributes
     {
+        internal static ConfigDescription SeeOnlyDisplay(string overwriteDescription, string overwriteLabel, AcceptableValueBase acceptableValues = null)
+        {
+            return new ConfigDescription(overwriteDescription, acceptableValues, new ConfigurationManagerAttributes() { ReadOnly = true, CustomDrawer = (a) => CustomLabelDrawer(overwriteLabel) });
+        }
+
+        private static void CustomLabelDrawer(string labelText)
+        {
+            GUILayout.Label(labelText, GUILayout.ExpandWidth(true));
+        }
+
         /// <summary>
         /// Should the setting be shown as a percentage (only use with value range settings).
         /// </summary>

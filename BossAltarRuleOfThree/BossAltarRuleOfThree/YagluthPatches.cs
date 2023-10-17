@@ -40,7 +40,8 @@ namespace BossAltarRuleOfThree
                 return;
             }
 
-            Helper.plugin.StartCoroutine(WaitThenUpdateItemStands(__instance));
+            // using the plugin as the starter because its never unloaded or disabled
+            BossAltarRuleOfThreePlugin.Instance.StartCoroutine(WaitThenUpdateItemStands(__instance));
         }
 
         private static IEnumerator WaitThenUpdateItemStands(OfferingBowl __instance)
@@ -74,8 +75,6 @@ namespace BossAltarRuleOfThree
         private static void UpdateYagluthItemStands(OfferingBowl __instance, bool isInteract)
         {
             List<ItemStand> activeList = __instance.CustomFindItemStands(Activity.OnlyActive, out ItemStand firstBaseHider, out ItemStand secondBaseHider, out int totalCount);
-
-            Helper.Log($"goblinking altar active item stands: {activeList.Count}/{totalCount}");
 
             if (activeList.Count != 5)
             {
