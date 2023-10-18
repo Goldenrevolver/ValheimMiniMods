@@ -122,7 +122,7 @@ namespace ObtainableStonePickaxe
                     recipe.m_repairStation = repairStation;
 
                     // I quite like iron gate's recipe now
-                    //if (craftingRecipe != null && UpdateStonePickaxeRecipe.Value)
+                    //if (craftingRecipe != null)
                     //{
                     //    recipe.m_resources = craftingRecipe;
                     //}

@@ -15,7 +15,7 @@ namespace ObtainableStonePickaxe
             // suppress the log spam they added
             public static bool Prefix(object o)
             {
-                return !(o is string s && s == "No stat for mine tier: " + stonePickaxeTier.ToString());
+                return !(o is string s && s == $"No stat for mine tier: {stonePickaxeTier}");
             }
         }
 

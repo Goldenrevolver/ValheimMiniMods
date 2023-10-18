@@ -11,8 +11,6 @@ namespace ObtainableStonePickaxe
         public const string NAME = "Obtainable Stone Pickaxe";
         public const string VERSION = "1.0.1";
 
-        public static ConfigEntry<bool> ChangeStonePickaxeRecipe;
-
         public static ConfigEntry<bool> UpgradeableStonePickaxe;
         public static ConfigEntry<bool> UpgradeableAntlerPickaxe;
         public static ConfigEntry<bool> BronzePickaxeUpgradeFix;
