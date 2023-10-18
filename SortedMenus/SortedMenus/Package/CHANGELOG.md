@@ -1,5 +1,7 @@
 # Changelog
 
+## 1.3.3
+- Added config option to also sort the hand crafting menu in your inventory. Disabled by default
 ## 1.3.2
 - Hotfix: Fixed custom crafting station support causing the cauldron to not get treated as a cooking station
 ## 1.3.1

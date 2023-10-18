@@ -11,18 +11,29 @@ namespace SortedMenus
                 return;
             }
 
-            // no need to sort the hand crafting menu while not in debug mode
-            if (isHandCrafting && !Player.m_localPlayer.NoCostCheat())
-            {
-                return;
-            }
-
             List<Recipe> relevantCache = null;
             CraftingStationType stationType = CraftingStationType.Other;
 
             if (isHandCrafting)
             {
-                relevantCache = SortedRecipeCaches.cachedSortedNoCostRecipes;
+                if (SortConfig.HandCraftingMenuSorting.Value == SortHandCraftingMenu.Disabled)
+                {
+                    return;
+                }
+                else if (SortConfig.HandCraftingMenuSorting.Value == SortHandCraftingMenu.OnlyWhileUsingNoCostCheat
+                    && !Player.m_localPlayer.NoCostCheat())
+                {
+                    return;
+                }
+
+                if (Player.m_localPlayer.NoCostCheat())
+                {
+                    relevantCache = SortedRecipeCaches.cachedSortedNoCostRecipes;
+                }
+                else
+                {
+                    relevantCache = SortedRecipeCaches.cachedSortedHandCraftingRecipes;
+                }
             }
             else if (stationName == "forge")
             {

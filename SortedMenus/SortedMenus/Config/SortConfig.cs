@@ -16,6 +16,7 @@ namespace SortedMenus
         internal static ConfigEntry<bool> SortInediblesToBottom;
 
         internal static ConfigEntry<SortCraftingMenu> CraftingMenuSorting;
+        internal static ConfigEntry<SortHandCraftingMenu> HandCraftingMenuSorting;
         internal static ConfigEntry<ArmorSetSorting> KeepArmorSetsTogether;
 
         internal static ConfigEntry<SortAmmo> SortAmmo;
@@ -47,6 +48,7 @@ namespace SortedMenus
             sectionName = "1 - Crafting Menus";
 
             CraftingMenuSorting = config.Bind(sectionName, nameof(CraftingMenuSorting), SortCraftingMenu.ByName, string.Empty);
+            HandCraftingMenuSorting = config.Bind(sectionName, nameof(HandCraftingMenuSorting), SortHandCraftingMenu.OnlyWhileUsingNoCostCheat, "Whether to sort the 'by hand' crafting menu that is directly in your inventory. Since without mods it only has 4 recipes and has to get sorted every time you open your inventory, by default it's only done when using the 'no cost' cheat.");
             KeepArmorSetsTogether = config.Bind(sectionName, nameof(KeepArmorSetsTogether), ArmorSetSorting.EnabledWithModSupport, "If enabled, then armor set sorting is determined by the name of the chest piece, and the headpiece and legpiece are added around it. If applicable, the (thematic) cape is also added.");
 
             SortAmmo = config.Bind(sectionName, nameof(SortAmmo), SortedMenus.SortAmmo.ToTheTop, string.Empty);
@@ -152,6 +154,13 @@ namespace SortedMenus
         Disabled = 0,
         Enabled = 1,
         EnabledWithModSupport = 2,
+    }
+
+    public enum SortHandCraftingMenu
+    {
+        Disabled = 0,
+        OnlyWhileUsingNoCostCheat = 1,
+        Enabled = 2
     }
 
     public enum SortCraftingMenu

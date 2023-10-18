@@ -12,6 +12,7 @@ namespace SortedMenus
         internal static readonly List<Recipe> cachedSortedForgeRecipes = new List<Recipe>();
 
         internal static readonly List<Recipe> cachedSortedNoCostRecipes = new List<Recipe>();
+        internal static readonly List<Recipe> cachedSortedHandCraftingRecipes = new List<Recipe>();
 
         [HarmonyPatch(typeof(Game), nameof(Game.Logout)), HarmonyPrefix]
         internal static void ResetOnLogout()
@@ -56,6 +57,7 @@ namespace SortedMenus
             cachedSortedForgeRecipes.Clear();
 
             cachedSortedNoCostRecipes.Clear();
+            cachedSortedHandCraftingRecipes.Clear();
         }
 
         internal static void UpdateSortCache(List<Recipe> newSortedList, List<Recipe> oldSortedList)
