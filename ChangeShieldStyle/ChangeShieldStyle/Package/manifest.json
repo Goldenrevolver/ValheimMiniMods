@@ -1,0 +1,9 @@
+{
+  "name": "Change_Style_Of_Existing_Shield",
+  "description": "Allows you to change the style of a shield at any point after crafting it",
+  "version_number": "1.0.0",
+  "website_url": "https://github.com/Goldenrevolver/ValheimMiniMods",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2200"
+  ]
+}
