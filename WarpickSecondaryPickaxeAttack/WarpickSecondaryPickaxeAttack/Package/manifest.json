@@ -1,0 +1,9 @@
+{
+  "name": "Warpick_Secondary_Pickaxe_Attack",
+  "description": "Gives pickaxes a secondary horizontal swipe attack, perfect for hitting stone golems or ore at eye level",
+  "version_number": "1.0.0",
+  "website_url": "https://github.com/Goldenrevolver/ValheimMiniMods",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2200"
+  ]
+}
