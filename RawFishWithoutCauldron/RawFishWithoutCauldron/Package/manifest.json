@@ -1,0 +1,9 @@
+{
+  "name": "Quickly_Cut_Raw_Fish_Without_Cauldron",
+  "description": "Allows you to quickly cut fish into raw fish using a knife instead of crafting at a cauldron",
+  "version_number": "1.0.0",
+  "website_url": "https://github.com/Goldenrevolver/ValheimMiniMods",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2200"
+  ]
+}
