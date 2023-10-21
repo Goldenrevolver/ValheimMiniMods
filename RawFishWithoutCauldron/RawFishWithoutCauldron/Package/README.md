@@ -1,6 +1,6 @@
 This mod allows you to quickly cut fish into raw fish using a knife instead of crafting at a cauldron.
 
-Simply walk up to a wooden or iron cooking station or a workbench and use your knife on it the same way you offer items to boss altars.
+Simply walk up to a wooden or iron cooking station or a workbench and use your knife on it the same way you offer items to boss altars. You can also use a specific fish on the station to only consume this kind of fish, if you have a knife in your inventory.
 
 This will play a visual effect and use the base game raw fish recipe to turn a fish from your inventory into raw fish, including giving more raw fish based on the quality.
 
