@@ -1,6 +1,6 @@
-This mod allows you to change the style of a shield at any point after crafting it.
+This mod allows you to change the style of a shield or linen cape at any point after crafting it.
 
-Simply walk up to a workbench or forge and use your shield on it the same way you offer items to a boss altar.
+Simply walk up to a workbench or forge and use your shield or linen cape on it the same way you offer items to a boss altar.
 
 It will cycle through all possible options. Enjoy changing your fashion!
 

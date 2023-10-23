@@ -9,7 +9,7 @@ namespace ChangeShieldStyle
     {
         public const string GUID = "goldenrevolver.ChangeShieldStyle";
         public const string NAME = "Change Style Of Existing Shield";
-        public const string VERSION = "1.0.0";
+        public const string VERSION = "1.1.0";
 
         protected void Awake()
         {
@@ -40,7 +40,8 @@ namespace ChangeShieldStyle
                 return false;
             }
 
-            if (item.m_shared.m_itemType != ItemDrop.ItemData.ItemType.Shield)
+            if (item.m_shared.m_itemType != ItemDrop.ItemData.ItemType.Shield
+                && item.m_shared.m_name != "$item_cape_linen")
             {
                 return false;
             }
@@ -57,8 +58,8 @@ namespace ChangeShieldStyle
 
             item.m_variant = (item.m_variant + 1) % item.m_shared.m_icons.Length;
 
-            // in the base game, this is always true for a shield, but you never know if a mod patches it
-            if (item.IsEquipable())
+            // in the base game, IsEquipable is always true for a shield, but you never know if a mod patches it
+            if (item.IsEquipable() && user.IsItemEquiped(item))
             {
                 // updates the visual equipment, otherwise you need to unequip and reequip it yourself
                 user.UnequipItem(item);
