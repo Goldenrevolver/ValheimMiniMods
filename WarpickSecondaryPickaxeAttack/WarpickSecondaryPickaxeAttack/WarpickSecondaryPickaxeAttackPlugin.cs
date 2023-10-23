@@ -11,7 +11,7 @@ namespace WarpickSecondaryPickaxeAttack
     {
         public const string GUID = "goldenrevolver.WarpickSecondaryPickaxeAttack";
         public const string NAME = "Warpick - Secondary Pickaxe Attack";
-        public const string VERSION = "1.0.0";
+        public const string VERSION = "1.0.1";
 
         internal static ConfigSync serverSyncInstance;
         internal static ConfigEntry<bool> UseServerSync;

@@ -34,7 +34,7 @@ namespace WarpickSecondaryPickaxeAttack
         {
             var humanoid = __instance.GetComponent<Humanoid>();
 
-            if (!humanoid || humanoid.GetCurrentWeapon()?.m_shared?.m_skillType != Skills.SkillType.Pickaxes)
+            if (!humanoid || !humanoid.m_nview || humanoid.GetCurrentWeapon()?.m_shared?.m_skillType != Skills.SkillType.Pickaxes)
             {
                 return;
             }
