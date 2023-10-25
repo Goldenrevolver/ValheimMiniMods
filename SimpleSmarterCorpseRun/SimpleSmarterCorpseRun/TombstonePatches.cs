@@ -84,9 +84,12 @@ namespace SimpleSmarterCorpseRun
                 {
                     Player player = __instance.FindOwner();
 
-                    player.m_seman.RemoveStatusEffect(corpseRun, true);
+                    if (player)
+                    {
+                        player.m_seman.RemoveStatusEffect(corpseRun, true);
 
-                    CorpseRunMath.AddCustomCorpseEffectRunToPlayer(player, corpseRun);
+                        CorpseRunMath.AddCustomCorpseEffectRunToPlayer(player, corpseRun);
+                    }
                 }
             }
         }
@@ -107,6 +110,12 @@ namespace SimpleSmarterCorpseRun
             {
                 return;
             }
+
+            // would work, but I don't actually like that behavior
+            //if (InventoryGui.instance.IsContainerOpen())
+            //{
+            //    return;
+            //}
 
             List<ItemData> playerItems = new List<ItemData>(__instance.GetAllItems());
 

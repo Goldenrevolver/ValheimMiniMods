@@ -18,7 +18,7 @@ namespace SimpleSmarterCorpseRun
     {
         public const string GUID = "goldenrevolver.SimpleSmarterCorpseRun";
         public const string NAME = "Simple Smarter Corpse Run and Tombstone";
-        public const string VERSION = "1.0.0";
+        public const string VERSION = "1.0.1";
 
         public const string CustomCorpseRun = "GoldensCorpseRunWithCustomCarryWeight";
 

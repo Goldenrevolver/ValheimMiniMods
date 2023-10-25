@@ -1,7 +1,7 @@
 {
   "name": "Simple_Smarter_Corpse_Run_And_Tombstone",
   "description": "The 'Corpse Run' buff and the tombstone will now check for items like your Megingjord when interacting and calculating the buff to prevent you accidentally getting overburdened",
-  "version_number": "1.0.0",
+  "version_number": "1.0.1",
   "website_url": "https://github.com/Goldenrevolver/ValheimMiniMods",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.2200"
