@@ -6,11 +6,12 @@ using static SneakCameraAndCollision.SneakConfig;
 
 namespace SneakCameraAndCollision
 {
-    [BepInPlugin("goldenrevolver.SneakCameraAndCollision", NAME, VERSION)]
+    [BepInPlugin(GUID, NAME, VERSION)]
     public class SneakCameraAndCollisionPlugin : BaseUnityPlugin
     {
+        public const string GUID = "goldenrevolver.SneakCameraAndCollision";
         public const string NAME = "Sneak Camera and Collision Height";
-        public const string VERSION = "1.0.1";
+        public const string VERSION = "1.0.2";
 
         // maybe handle uncroaching (even if the value ranges and base game behavior already handle it quite well)
 

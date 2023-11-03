@@ -27,9 +27,15 @@ namespace SneakCameraAndCollision
             }
 
             bool isCrouching = player.IsCrouching() && player.IsOnGround();
+
+            if (!isCrouching)
+            {
+                return;
+            }
+
             bool isCrouchWalking = player.IsSneaking();
 
-            if ((LowerCameraWhen.Value == CrouchPosition.Crouching && isCrouching)
+            if (LowerCameraWhen.Value == CrouchPosition.Crouching
                 || (LowerCameraWhen.Value == CrouchPosition.CrouchWalking && isCrouchWalking)
                 || (LowerCameraWhen.Value == CrouchPosition.CrouchStanding && !isCrouchWalking))
             {
