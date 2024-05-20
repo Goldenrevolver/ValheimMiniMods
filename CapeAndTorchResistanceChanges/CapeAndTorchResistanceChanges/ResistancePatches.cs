@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using static CapeAndTorchResistanceChanges.CapeAndTorchResistanceChangesPlugin;
 using static CapeAndTorchResistanceChanges.ResistanceHelper;
@@ -16,6 +17,7 @@ namespace CapeAndTorchResistanceChanges
             Water = 1024,
             Cold = 2048
         }
+        private static readonly List<DamageType> customDamageTypes = Enum.GetValues(typeof(NewDamageTypes)).Cast<DamageType>().ToList();
 
         [HarmonyPatch(typeof(SEMan), nameof(SEMan.AddStatusEffect), new Type[] { typeof(int), typeof(bool), typeof(int), typeof(float) })]
         private static class SEMan_AddStatusEffectByName_Patch
@@ -235,55 +237,52 @@ namespace CapeAndTorchResistanceChanges
             }
         }
 
+        /// <summary>
+        /// Intercept GetDamageModifiersTooltipString calls, filter out our custom mods, and handle their tooltip manually.
+        /// </summary>
         [HarmonyPatch(typeof(SE_Stats), nameof(SE_Stats.GetDamageModifiersTooltipString))]
         private static class SE_Stats_GetDamageModifiersTooltipString_Patch
         {
-            private static void Postfix(ref string __result, List<HitData.DamageModPair> mods)
+            private static void Prefix(ref List<DamageModPair> mods, ref string __state)
             {
-                __result = Regex.Replace(__result, @"\n.*<color=orange></color>", "");
-                foreach (HitData.DamageModPair damageModPair in mods)
+                var customMods = mods.Where(m => customDamageTypes.Contains(m.m_type));
+                if (customMods.Any())
                 {
-                    // if it's a vanilla damage type
-                    if (Enum.IsDefined(typeof(HitData.DamageType), damageModPair.m_type))
-                    {
-                        continue;
-                    }
-
-                    if (damageModPair.m_modifier != HitData.DamageModifier.Ignore && damageModPair.m_modifier != HitData.DamageModifier.Normal)
+                    var text = "";
+                    foreach (var damageModPair in customMods)
                     {
                         switch (damageModPair.m_modifier)
                         {
-                            case HitData.DamageModifier.Resistant:
-                                __result += "\n$inventory_dmgmod: <color=orange>$inventory_resistant</color> VS ";
+                            case DamageModifier.Resistant:
+                                text += "\n$inventory_dmgmod: <color=orange>$inventory_resistant</color> VS ";
                                 break;
-
-                            case HitData.DamageModifier.Weak:
-                                __result += "\n$inventory_dmgmod: <color=orange>$inventory_weak</color> VS ";
+                            case DamageModifier.Weak:
+                                text += "\n$inventory_dmgmod: <color=orange>$inventory_weak</color> VS ";
                                 break;
-
-                            case HitData.DamageModifier.Immune:
-                                __result += "\n$inventory_dmgmod: <color=orange>$inventory_immune</color> VS ";
+                            case DamageModifier.Immune:
+                                text += "\n$inventory_dmgmod: <color=orange>$inventory_immune</color> VS ";
                                 break;
-
-                            case HitData.DamageModifier.VeryResistant:
-                                __result += "\n$inventory_dmgmod: <color=orange>$inventory_veryresistant</color> VS ";
+                            case DamageModifier.VeryResistant:
+                                text += "\n$inventory_dmgmod: <color=orange>$inventory_veryresistant</color> VS ";
                                 break;
-
-                            case HitData.DamageModifier.VeryWeak:
-                                __result += "\n$inventory_dmgmod: <color=orange>$inventory_veryweak</color> VS ";
+                            case DamageModifier.VeryWeak:
+                                text += "\n$inventory_dmgmod: <color=orange>$inventory_veryweak</color> VS ";
                                 break;
                         }
-
-                        if ((int)damageModPair.m_type == (int)NewDamageTypes.Water)
-                        {
-                            __result += $"<color=orange>{WaterModifierLabel.Value}</color>";
-                        }
-                        else if ((int)damageModPair.m_type == (int)NewDamageTypes.Cold)
-                        {
-                            __result += $"<color=orange>{ColdModifierLabel.Value}</color>";
-                        }
+                        text += "<color=orange>";
+                        if (damageModPair.m_type == (DamageType)NewDamageTypes.Water) text += $"{WaterModifierLabel.Value}";
+                        else if (damageModPair.m_type == (DamageType)NewDamageTypes.Cold) text += $"{ColdModifierLabel.Value}";
+                        text += "</color>";
                     }
+
+                    mods = mods.Where(m => !customDamageTypes.Contains(m.m_type)).ToList();
+                    __state = text;
                 }
+            }
+
+            private static void Postfix(ref string __result, string __state)
+            {
+                __result += __state;
             }
         }
     }
