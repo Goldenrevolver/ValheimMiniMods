@@ -1,7 +1,7 @@
 {
   "name": "Cape_And_Torch_Resistance_Rework_And_New_Water_And_Cold_Resistance",
   "description": "Adds water and cold debuff resistance and changes the bonuses of the capes and torches to use these new resistances",
-  "version_number": "1.0.3",
+  "version_number": "1.0.4",
   "website_url": "https://github.com/Goldenrevolver/ValheimMiniMods",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.2200"

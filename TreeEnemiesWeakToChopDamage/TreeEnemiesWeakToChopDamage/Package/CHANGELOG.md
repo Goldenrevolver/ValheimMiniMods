@@ -1,5 +1,7 @@
 # Changelog
 
+## 1.1.2
+- Updated for Ashlands
 ## 1.1.1
 - Updated for Valheim version 0.217.24
 ## 1.1.0

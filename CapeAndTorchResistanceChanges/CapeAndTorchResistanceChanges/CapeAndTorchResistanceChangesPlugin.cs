@@ -14,7 +14,7 @@ namespace CapeAndTorchResistanceChanges
     public class CapeAndTorchResistanceChangesPlugin : BaseUnityPlugin
     {
         public const string NAME = "Cape and Torch Resistance Changes - Water and Cold Resistance";
-        public const string VERSION = "1.0.3";
+        public const string VERSION = "1.0.4";
 
         public static ConfigEntry<CapeChanges> EnableCapeChanges;
         public static ConfigEntry<TorchChanges> EnableTorchChanges;

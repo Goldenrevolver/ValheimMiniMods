@@ -27,7 +27,7 @@ namespace SimpleSetAndCapeBonuses
                 player = Player.m_localPlayer;
             }
 
-            if (player == null || !player.m_seman.HaveStatusEffect(PatchObjectDB.ragsSetBonus))
+            if (player == null || !player.m_seman.HaveStatusEffect(PatchObjectDB.ragsSetBonusHash))
             {
                 return;
             }

@@ -148,6 +148,7 @@ namespace BossAltarRuleOfThree
             Both,
         }
 
+        // TODO apparently this can null reference
         // the biggest change to the base game 'FindItemStands' is that this also includes inactive game objects in the 'FindObjectsOfType' call
         private static List<ItemStand> CustomFindItemStands(this OfferingBowl offering, Activity activity, out ItemStand firstBaseHider, out ItemStand secondBaseHider, out int totalCount)
         {

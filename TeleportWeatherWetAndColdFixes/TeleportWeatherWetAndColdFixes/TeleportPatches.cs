@@ -51,9 +51,9 @@ namespace TeleportWeatherWetAndColdFixes
 
                 if (TeleportWeatherWetAndColdFixesPlugin.TeleportChange.Value == TeleportChange.InstantlyUpdateWeatherAndClearWetAndColdDebuff)
                 {
-                    __instance.m_seman.RemoveStatusEffect(Player.s_statusEffectWet);
-                    __instance.m_seman.RemoveStatusEffect(Player.s_statusEffectCold);
-                    __instance.m_seman.RemoveStatusEffect(Player.s_statusEffectFreezing);
+                    __instance.m_seman.RemoveStatusEffect(SEMan.s_statusEffectWet);
+                    __instance.m_seman.RemoveStatusEffect(SEMan.s_statusEffectCold);
+                    __instance.m_seman.RemoveStatusEffect(SEMan.s_statusEffectFreezing);
                 }
             }
         }

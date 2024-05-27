@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using static CapeAndTorchResistanceChanges.CapeAndTorchResistanceChangesPlugin;
 using static CapeAndTorchResistanceChanges.ResistanceHelper;
 using static HitData;
@@ -14,9 +13,10 @@ namespace CapeAndTorchResistanceChanges
         // default HitData.DamageType are flags, so we continue to use powers of 2
         internal enum NewDamageTypes
         {
-            Water = 1024,
-            Cold = 2048
+            Water = 0x1000,
+            Cold = 0x2000
         }
+
         private static readonly List<DamageType> customDamageTypes = Enum.GetValues(typeof(NewDamageTypes)).Cast<DamageType>().ToList();
 
         [HarmonyPatch(typeof(SEMan), nameof(SEMan.AddStatusEffect), new Type[] { typeof(int), typeof(bool), typeof(int), typeof(float) })]
@@ -136,27 +136,28 @@ namespace CapeAndTorchResistanceChanges
             private static bool Prefix(Player __instance, float dt)
             {
                 __instance.m_nearFireTimer += dt;
-                DamageModifiers damageModifiers = __instance.GetDamageModifiers(null);
+                DamageModifiers damageModifiers = __instance.GetDamageModifiers();
                 bool isNearCampfire = __instance.m_nearFireTimer < 0.25f;
-                bool isBurning = __instance.m_seman.HaveStatusEffect("Burning");
+                bool isBurning = __instance.m_seman.HaveStatusEffect(SEMan.s_statusEffectBurning);
                 bool isInShelter = __instance.InShelter();
                 DamageModifier frostModifier = damageModifiers.GetModifier(DamageType.Frost);
-                bool isEnvFreezing = EnvMan.instance.IsFreezing();
-                bool isEnvCold = EnvMan.instance.IsCold();
-                bool isEnvWet = EnvMan.instance.IsWet();
+                bool isEnvFreezing = EnvMan.IsFreezing();
+                bool isEnvCold = EnvMan.IsCold();
+                bool isEnvWet = EnvMan.IsWet();
                 bool isSensed = __instance.IsSensed();
                 bool isSitting = __instance.IsSitting();
                 bool isInWarmCozyArea = EffectArea.IsPointInsideArea(__instance.transform.position, EffectArea.Type.WarmCozyArea, 1f);
+                bool isInsideShield = ShieldGenerator.IsInsideShield(__instance.transform.position);
                 bool shouldGetFreezing = isEnvFreezing && !isNearCampfire && !isInShelter;
                 bool shouldGetCold = (isEnvCold && !isNearCampfire) || (isEnvFreezing && isNearCampfire && !isInShelter) || (isEnvFreezing && !isNearCampfire && isInShelter);
 
-                if (isEnvWet && !__instance.m_underRoof)
+                if (isEnvWet && !__instance.m_underRoof && !isInsideShield)
                 {
                     // this can fail due to resistances
-                    __instance.m_seman.AddStatusEffect(Player.s_statusEffectWet, true);
+                    __instance.m_seman.AddStatusEffect(SEMan.s_statusEffectWet, true);
                 }
 
-                bool isWet = __instance.m_seman.HaveStatusEffect("Wet");
+                bool isWet = __instance.m_seman.HaveStatusEffect(SEMan.s_statusEffectWet);
 
                 if (IsAtLeastResistant(frostModifier) || isInWarmCozyArea || isBurning)
                 {
@@ -180,47 +181,47 @@ namespace CapeAndTorchResistanceChanges
 
                 if (isInShelter)
                 {
-                    __instance.m_seman.AddStatusEffect(Player.s_statusEffectShelter, false);
+                    __instance.m_seman.AddStatusEffect(SEMan.s_statusEffectShelter, false);
                 }
                 else
                 {
-                    __instance.m_seman.RemoveStatusEffect(Player.s_statusEffectShelter, false);
+                    __instance.m_seman.RemoveStatusEffect(SEMan.s_statusEffectShelter, false);
                 }
 
                 if (isNearCampfire)
                 {
-                    __instance.m_seman.AddStatusEffect(Player.s_statusEffectCampFire, false);
+                    __instance.m_seman.AddStatusEffect(SEMan.s_statusEffectCampFire, false);
                 }
                 else
                 {
-                    __instance.m_seman.RemoveStatusEffect(Player.s_statusEffectCampFire, false);
+                    __instance.m_seman.RemoveStatusEffect(SEMan.s_statusEffectCampFire, false);
                 }
 
                 bool restedConditions = !isSensed && (isSitting || isInShelter) && !shouldGetCold && !shouldGetFreezing && (!isWet || isInWarmCozyArea) && !isBurning && isNearCampfire;
 
                 if (restedConditions)
                 {
-                    __instance.m_seman.AddStatusEffect(Player.s_statusEffectResting, false);
+                    __instance.m_seman.AddStatusEffect(SEMan.s_statusEffectResting, false);
                 }
                 else
                 {
-                    __instance.m_seman.RemoveStatusEffect(Player.s_statusEffectResting, false);
+                    __instance.m_seman.RemoveStatusEffect(SEMan.s_statusEffectResting, false);
                 }
 
                 __instance.m_safeInHome = (restedConditions && isInShelter && (float)__instance.GetBaseValue() >= 1f);
 
                 if (shouldGetFreezing)
                 {
-                    if (!__instance.m_seman.RemoveStatusEffect(Player.s_statusEffectCold, true))
+                    if (!__instance.m_seman.RemoveStatusEffect(SEMan.s_statusEffectCold, true))
                     {
-                        __instance.m_seman.AddStatusEffect(Player.s_statusEffectFreezing, false);
+                        __instance.m_seman.AddStatusEffect(SEMan.s_statusEffectFreezing, false);
 
                         return false;
                     }
                 }
                 else if (shouldGetCold)
                 {
-                    if (!__instance.m_seman.RemoveStatusEffect(Player.s_statusEffectFreezing, true) && __instance.m_seman.AddStatusEffect(Player.s_statusEffectCold, false))
+                    if (!__instance.m_seman.RemoveStatusEffect(SEMan.s_statusEffectFreezing, true) && __instance.m_seman.AddStatusEffect(SEMan.s_statusEffectCold, false))
                     {
                         __instance.ShowTutorial("cold", false);
 
@@ -229,8 +230,8 @@ namespace CapeAndTorchResistanceChanges
                 }
                 else
                 {
-                    __instance.m_seman.RemoveStatusEffect(Player.s_statusEffectCold, false);
-                    __instance.m_seman.RemoveStatusEffect(Player.s_statusEffectFreezing, false);
+                    __instance.m_seman.RemoveStatusEffect(SEMan.s_statusEffectCold, false);
+                    __instance.m_seman.RemoveStatusEffect(SEMan.s_statusEffectFreezing, false);
                 }
 
                 return false;
@@ -245,39 +246,58 @@ namespace CapeAndTorchResistanceChanges
         {
             private static void Prefix(ref List<DamageModPair> mods, ref string __state)
             {
+                __state = string.Empty;
+
                 var customMods = mods.Where(m => customDamageTypes.Contains(m.m_type));
-                if (customMods.Any())
+
+                if (!customMods.Any())
                 {
-                    var text = "";
-                    foreach (var damageModPair in customMods)
+                    return;
+                }
+
+                var text = string.Empty;
+
+                foreach (var damageModPair in customMods)
+                {
+                    switch (damageModPair.m_modifier)
                     {
-                        switch (damageModPair.m_modifier)
-                        {
-                            case DamageModifier.Resistant:
-                                text += "\n$inventory_dmgmod: <color=orange>$inventory_resistant</color> VS ";
-                                break;
-                            case DamageModifier.Weak:
-                                text += "\n$inventory_dmgmod: <color=orange>$inventory_weak</color> VS ";
-                                break;
-                            case DamageModifier.Immune:
-                                text += "\n$inventory_dmgmod: <color=orange>$inventory_immune</color> VS ";
-                                break;
-                            case DamageModifier.VeryResistant:
-                                text += "\n$inventory_dmgmod: <color=orange>$inventory_veryresistant</color> VS ";
-                                break;
-                            case DamageModifier.VeryWeak:
-                                text += "\n$inventory_dmgmod: <color=orange>$inventory_veryweak</color> VS ";
-                                break;
-                        }
-                        text += "<color=orange>";
-                        if (damageModPair.m_type == (DamageType)NewDamageTypes.Water) text += $"{WaterModifierLabel.Value}";
-                        else if (damageModPair.m_type == (DamageType)NewDamageTypes.Cold) text += $"{ColdModifierLabel.Value}";
-                        text += "</color>";
+                        case DamageModifier.Resistant:
+                            text += "\n$inventory_dmgmod: <color=orange>$inventory_resistant</color> VS ";
+                            break;
+
+                        case DamageModifier.Weak:
+                            text += "\n$inventory_dmgmod: <color=orange>$inventory_weak</color> VS ";
+                            break;
+
+                        case DamageModifier.Immune:
+                            text += "\n$inventory_dmgmod: <color=orange>$inventory_immune</color> VS ";
+                            break;
+
+                        case DamageModifier.VeryResistant:
+                            text += "\n$inventory_dmgmod: <color=orange>$inventory_veryresistant</color> VS ";
+                            break;
+
+                        case DamageModifier.VeryWeak:
+                            text += "\n$inventory_dmgmod: <color=orange>$inventory_veryweak</color> VS ";
+                            break;
                     }
 
-                    mods = mods.Where(m => !customDamageTypes.Contains(m.m_type)).ToList();
-                    __state = text;
+                    text += "<color=orange>";
+
+                    if (damageModPair.m_type == (DamageType)NewDamageTypes.Water)
+                    {
+                        text += $"{WaterModifierLabel.Value}";
+                    }
+                    else if (damageModPair.m_type == (DamageType)NewDamageTypes.Cold)
+                    {
+                        text += $"{ColdModifierLabel.Value}";
+                    }
+
+                    text += "</color>";
                 }
+
+                mods = mods.Where(m => !customDamageTypes.Contains(m.m_type)).ToList();
+                __state = text;
             }
 
             private static void Postfix(ref string __result, string __state)

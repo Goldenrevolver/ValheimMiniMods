@@ -11,7 +11,7 @@ namespace TreeEnemiesWeakToChopDamage
     {
         public const string GUID = "goldenrevolver.TreeEnemiesWeakToChopDamage";
         public const string NAME = "Tree Enemies Are Weak To Axe Damage";
-        public const string VERSION = "1.1.1";
+        public const string VERSION = "1.1.2";
 
         protected void Awake()
         {

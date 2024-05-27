@@ -29,6 +29,7 @@ namespace SimpleSetAndCapeBonuses
     {
         internal const string leatherSetBonus = "GoldensLeatherSetBonus";
         internal const string ragsSetBonus = "GoldensRagsSetBonus";
+        internal static int ragsSetBonusHash;
 
         private static readonly string[] ragsSet = new string[] { "HelmetMidsummerCrown", "ArmorRagsChest", "ArmorRagsLegs", };
         private static readonly string[] leatherSet = new string[] { "HelmetLeather", "ArmorLeatherChest", "ArmorLeatherLegs" };
@@ -72,6 +73,7 @@ namespace SimpleSetAndCapeBonuses
             ragsSetBonusBuff.name = $"{ragsSetBonus}";
             ragsSetBonusBuff.m_name = $"${ragsSetBonus.ToLower()}";
             ragsSetBonusBuff.m_tooltip = ForagerSetBonusTooltip.Value;
+            ragsSetBonusHash = ragsSetBonusBuff.NameHash();
 
             __instance.m_StatusEffects.Add(ragsSetBonusBuff);
 

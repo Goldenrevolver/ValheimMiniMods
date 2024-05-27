@@ -40,7 +40,7 @@ namespace ObtainableStonePickaxe
 
                         if (dropOnDestroyed != null)
                         {
-                            var dropsOnlyStones = DropsOnlyStones(dropOnDestroyed.m_dropWhenDestroyed);
+                            bool dropsOnlyStones = DropsOnlyStones(dropOnDestroyed.m_dropWhenDestroyed);
 
                             DebugLog($"Destructable {__instance.name}: {dropsOnlyStones}");
 
@@ -59,7 +59,7 @@ namespace ObtainableStonePickaxe
 
                     if (mineRock5 != null)
                     {
-                        var dropsOnlyStones = DropsOnlyStones(mineRock5.m_dropItems);
+                        bool dropsOnlyStones = DropsOnlyStones(mineRock5.m_dropItems);
 
                         DebugLog($"Destructable MineRock5 {mineRock5.name}: {dropsOnlyStones}");
 
@@ -75,7 +75,7 @@ namespace ObtainableStonePickaxe
 
                     if (mineRock != null)
                     {
-                        var dropsOnlyStones = DropsOnlyStones(mineRock.m_dropItems);
+                        bool dropsOnlyStones = DropsOnlyStones(mineRock.m_dropItems);
 
                         DebugLog($"Destructable MineRock {mineRock.name}: {dropsOnlyStones}");
 
@@ -112,7 +112,7 @@ namespace ObtainableStonePickaxe
                 {
                     __state = __instance.m_minToolTier;
 
-                    var dropsOnlyStones = DropsOnlyStones(__instance.m_dropItems);
+                    bool dropsOnlyStones = DropsOnlyStones(__instance.m_dropItems);
 
                     DebugLog($"MineRock {__instance.name}: {dropsOnlyStones}");
 
@@ -141,7 +141,7 @@ namespace ObtainableStonePickaxe
                 {
                     __state = __instance.m_minToolTier;
 
-                    var dropsOnlyStones = DropsOnlyStones(__instance.m_dropItems);
+                    bool dropsOnlyStones = DropsOnlyStones(__instance.m_dropItems);
 
                     DebugLog($"MineRock5 {__instance.name}: {dropsOnlyStones}");
 

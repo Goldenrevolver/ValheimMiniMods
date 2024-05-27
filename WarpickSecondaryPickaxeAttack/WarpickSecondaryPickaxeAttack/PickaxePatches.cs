@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using UnityEngine;
 using static HitData;
 
 namespace WarpickSecondaryPickaxeAttack
@@ -80,7 +81,7 @@ namespace WarpickSecondaryPickaxeAttack
 
             if (__instance.m_pickaxe != 0f)
             {
-                __result += "\n$inventory_pickaxe: " + __instance.DamageRange(__instance.m_pickaxe, minFactor, maxFactor);
+                __result += $"\n$inventory_pickaxe: <color=orange>{Mathf.RoundToInt(__instance.m_pickaxe)}</color> <color=yellow>({Mathf.RoundToInt(__instance.m_pickaxe * minFactor)}-{Mathf.RoundToInt(__instance.m_pickaxe * maxFactor)}) </color>";
             }
         }
     }

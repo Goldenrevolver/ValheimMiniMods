@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using UnityEngine;
 using static HitData;
 
 namespace TreeEnemiesWeakToChopDamage
@@ -47,7 +48,7 @@ namespace TreeEnemiesWeakToChopDamage
 
             if (__instance.m_chop != 0f)
             {
-                __result += "\n$inventory_chop: " + __instance.DamageRange(__instance.m_chop, minFactor, maxFactor);
+                __result += $"\n$inventory_chop: <color=orange>{Mathf.RoundToInt(__instance.m_chop)}</color> <color=yellow>({Mathf.RoundToInt(__instance.m_chop * minFactor)}-{Mathf.RoundToInt(__instance.m_chop * maxFactor)}) </color>";
             }
         }
     }

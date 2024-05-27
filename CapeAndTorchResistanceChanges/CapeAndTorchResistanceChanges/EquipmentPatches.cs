@@ -30,9 +30,9 @@ namespace CapeAndTorchResistanceChanges
             if (item.m_shared.m_itemType == ItemDrop.ItemData.ItemType.Torch)
             {
                 bool isInShelter = player.InShelter();
-                bool isEnvFreezing = EnvMan.instance.IsFreezing();
-                bool isEnvCold = EnvMan.instance.IsCold();
-                bool isEnvWet = EnvMan.instance.IsWet();
+                bool isEnvFreezing = EnvMan.IsFreezing();
+                bool isEnvCold = EnvMan.IsCold();
+                bool isEnvWet = EnvMan.IsWet();
 
                 bool shouldGetColdOrFreezing = (isEnvCold || isEnvFreezing) && !isInShelter;
                 bool shouldGetWet = isEnvWet && !player.m_underRoof;

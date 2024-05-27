@@ -1,7 +1,7 @@
 {
   "name": "Simple_New_Set_and_Cape_Bonuses",
   "description": "Adds two new unique set bonuses, one to the rag armor and one to the leather armor. It also adds bonuses to the lesser used capes",
-  "version_number": "1.0.2",
+  "version_number": "1.0.3",
   "website_url": "https://github.com/Goldenrevolver/ValheimMiniMods",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.2200"

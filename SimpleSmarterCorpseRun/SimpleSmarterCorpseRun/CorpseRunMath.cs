@@ -14,7 +14,8 @@ namespace SimpleSmarterCorpseRun
         {
             SE_Stats oldCorpseRun = null;
 
-            // essentially SEMan.HaveStatusEffect but it returns the status effect
+            // based on the original SEMan.HaveStatusEffect that still iterated over 'm_statusEffects'
+            // but it returns the status effect in an out param
             foreach (var statusEffect in player.m_seman.m_statusEffects)
             {
                 if (statusEffect.name == SimpleSmarterCorpseRunPlugin.CustomCorpseRun)

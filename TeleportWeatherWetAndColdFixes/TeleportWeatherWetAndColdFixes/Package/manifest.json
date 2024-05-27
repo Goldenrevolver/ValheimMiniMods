@@ -1,7 +1,7 @@
 {
   "name": "Teleport_Instantly_Updates_Weather_And_Removes_Wet_Debuff",
   "description": "Changes teleporting with a portal to instantly update the weather on arrival, and optionally removes wet, cold and freezing debuffs at the end of the teleport",
-  "version_number": "1.0.2",
+  "version_number": "1.0.3",
   "website_url": "https://github.com/Goldenrevolver/ValheimMiniMods",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.2200"

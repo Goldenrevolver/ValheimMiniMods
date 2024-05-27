@@ -13,7 +13,7 @@ namespace SneakCameraAndCollision
         public const string NAME = "Sneak Camera and Collision Height";
         public const string VERSION = "1.0.2";
 
-        // maybe handle uncroaching (even if the value ranges and base game behavior already handle it quite well)
+        // maybe handle uncrouching (even if the value ranges and base game behavior already handle it quite well)
 
         protected void Awake()
         {
